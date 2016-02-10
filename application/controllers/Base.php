@@ -11,4 +11,10 @@ class Base extends CI_Controller {
     public function index()
     {
     }
+
+    public function viewLoad($view, $data = null){
+        $this->load->view('header');
+        $this->load->view("$view", $data);
+        $this->load->view('footer');
+    }
 }

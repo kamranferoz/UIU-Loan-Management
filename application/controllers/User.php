@@ -16,7 +16,7 @@ class User extends Base {
     }
 
     public function login(){
-        echo 'hello World';
+        $this->viewLoad('login');
     }
 
     public function logout(){
