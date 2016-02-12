@@ -26,24 +26,24 @@
                                     <div id="errorMsg" style="color: red; display: none;">Please correct the following errors:</div>
 
                                     <div class="form-group" id="fnameDiv">
-                                        <label for="fname">First Name <span style="color: red">*</span></label>
+                                        <label>First Name <span class="required">*</span></label>
                                         <input type="text" required class="form-control" id="fname" name="fname" placeholder="Enter your first name">
                                     </div>
 
                                     <div class="form-group" id="lnameDiv">
-                                        <label for="lname">Last Name <span style="color: red">*</span></label>
+                                        <label>Last Name <span class="required">*</span></label>
                                         <input type="text" required class="form-control" id="lname" name="lname" placeholder="Enter your last name">
                                     </div>
 
                                     <div class="form-group" id="student_idDiv">
-                                        <label for="student_id">Student ID <span style="color: red">*</span></label>
+                                        <label>Student ID <span class="required">*</span></label>
                                         <input type="text" required class="form-control" id="student_id" name="student_id" placeholder="Enter your university ID">
                                     </div>
 
                                     <div class="form-group" id="emailDiv">
-                                        <label for="email">Email <span style="color: red">*</span></label>
+                                        <label>Email <span class="required">*</span></label>
                                         <input type="email" required class="form-control" id="email" name="email" placeholder="Enter your email">
-                                   </div>
+                                    </div>
 
                                     <div class="form-group" id="nidDiv">
                                         <label for="nid">National ID</label>
@@ -73,8 +73,32 @@
                             </div>
                             <div id="collapseTwo" class="panel-collapse collapse">
                                 <div class="panel-body">
+
+                                    <div id="errorMsg2" style="color: red; display: none;">Please correct the following errors:</div>
+                                    <div class="form-group" id="loan_amountDiv">
+                                        <label for="loan_amount">Amount <span class="required">*</span></label>
+                                        <input type="number" required class="form-control" id="loan_amount" name="loan_amount" placeholder="Enter your loan ammount">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Tenor</label>
+                                        <select class="form-control">
+                                            <option value="4 months">Within 4 months</option>
+                                            <option value="6 months">Within 6 months</option>
+                                            <option value="1 year">Within 1 year</option>
+                                            <option value="2 years">Within 2 years</option>
+                                            <option value="3 years">Within 3 years</option>
+                                            <option value="4 years">Within 4 years</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group" id="reasonDiv">
+                                        <label for="reason">Reason <span class="required">*</span></label>
+                                        <textarea id="reason" required class="form-control" rows="3" placeholder="Enter your reason.."></textarea>
+                                    </div>
+
                                     <a class="btn btn-outline btn-primary" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Back</a>
-                                    <a class="btn btn-outline btn-primary" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">Next</a>
+                                    <a class="btn btn-outline btn-primary" onclick="checkValidationStepTwo('#collapseThreeTrigger')">Next</a>
+                                    <a style="visibility: hidden;" id="collapseThreeTrigger" data-toggle="collapse" data-parent="#accordion" href="#collapseThree"></a>
                                 </div>
                             </div>
                         </div>
@@ -147,6 +171,22 @@
                 $(element).click();
             }
             else $('#errorMsg').slideDown();
+        }
+        function checkValidationStepTwo(element){
+            var fields = ['loan_amount','reason'], loop, errorFlag = false;
+            for (loop = 0; loop < fields.length; loop++){
+                if (!document.getElementById(fields[loop]).checkValidity()){
+                    $('#' + fields[loop] + 'Div').addClass('has-error');
+                    errorFlag = true;
+                } else {
+                    $('#' + fields[loop] + 'Div').removeClass('has-error');
+                }
+            }
+            if (!errorFlag) {
+                $('#errorMsg2').slideUp();
+                $(element).click();
+            }
+            else $('#errorMsg2').slideDown();
         }
         function checkValidationStepThree(element){
             var fields = ['gname', 'relation', 'gphone', 'gaddress'], loop, errorFlag = false;
