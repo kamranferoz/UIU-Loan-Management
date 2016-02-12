@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-lg-12">
-        <h4 class="text-right" style="margin-top: 0;"><a href="<?php echo base_url() ?>../index.php/user/login" style="margin: 10px 0; display: inline-block">Back to login</a></h4>
+        <h4 class="text-right" style="margin-top: 0;"><a href="<?php echo base_url() ?>index.php/user/login" style="margin: 10px 0; display: inline-block">Back to login</a></h4>
     </div>
 </div>
 

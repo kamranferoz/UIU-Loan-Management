@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-lg-12">
-        <h4 class="text-right" style="margin-top: 0;"><a href="<?php echo base_url() ?>../index.php/user/login" style="margin: 10px 0; display: inline-block">Back to login</a></h4>
+        <h4 class="text-right" style="margin-top: 0;"><a href="<?php echo base_url() ?>index.php/user/login" style="margin: 10px 0; display: inline-block">Back to login</a></h4>
     </div>
 </div>
 
@@ -23,7 +23,10 @@
                             <div id="collapseOne" class="panel-collapse collapse in">
                                 <div class="panel-body">
 
-                                    <div id="errorMsg" style="color: red; display: none;">Please correct the following errors:</div>
+                                    <div id="errorMsg" style="display: none;" class="alert alert-danger alert-dismissable">
+                                        <button type="button" class="close" onclick="closeNotification('#errorMsg')" aria-hidden="true">×</button>
+                                        Please correct the following errors:
+                                    </div>
 
                                     <div class="form-group" id="fnameDiv">
                                         <label>First Name <span class="required">*</span></label>
@@ -51,7 +54,7 @@
                                     </div>
 
                                     <div class="form-group" id="students_present_addressDiv">
-                                        <label for="students_present_address">Student's Present Address<span style="color: red">*</span></label></label>
+                                        <label for="students_present_address">Student's Present Address <span class="required">*</span></label></label>
                                         <input type="text" required class="form-control" id="students_present_address" name="students_present_address" placeholder="Enter your Present Address">
                                     </div>
 
@@ -74,7 +77,11 @@
                             <div id="collapseTwo" class="panel-collapse collapse">
                                 <div class="panel-body">
 
-                                    <div id="errorMsg2" style="color: red; display: none;">Please correct the following errors:</div>
+                                    <div id="errorMsg2" style="display: none;" class="alert alert-danger alert-dismissable">
+                                        <button type="button" class="close" onclick="closeNotification('#errorMsg2')" aria-hidden="true">×</button>
+                                        Please correct the following errors:
+                                    </div>
+
                                     <div class="form-group" id="loan_amountDiv">
                                         <label for="loan_amount">Amount <span class="required">*</span></label>
                                         <input type="number" required class="form-control" id="loan_amount" name="loan_amount" placeholder="Enter your loan ammount">
@@ -111,15 +118,19 @@
                             <div id="collapseThree" class="panel-collapse collapse">
                                 <div class="panel-body">
 
-                                    <div id="errorMsg3" style="color: red; display: none;">Please correct the following errors:</div>
+                                    <div id="errorMsg3" style="display: none;" class="alert alert-danger alert-dismissable">
+                                        <button type="button" class="close" onclick="closeNotification('#errorMsg3')" aria-hidden="true">×</button>
+                                        Please correct the following errors:
+                                    </div>
+
 
                                     <div class="form-group" id="gnameDiv">
-                                        <label for="gname">Guardian Name <span style="color: red">*</span></label>
+                                        <label for="gname">Guardian Name <span class="required">*</span></label>
                                         <input type="text" required class="form-control" id="gname" name="gname" placeholder="Enter guardian's name">
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="relation">Relation <span style="color: red">*</span></label>
+                                        <label for="relation">Relation <span class="required">*</span></label>
                                         <select class="form-control" id="relation" name="relation">
                                             <option value="father">Father</option>
                                             <option value="mother">Mother</option>
@@ -132,12 +143,12 @@
                                     </div>
 
                                     <div class="form-group" id="gphoneDiv">
-                                        <label for="gphone">Guardian Phone Number <span style="color: red">*</span></label>
+                                        <label for="gphone">Guardian Phone Number <span class="required">*</span></label>
                                         <input type="text" required class="form-control" id="gphone" name="gphone" placeholder="Enter guardian's Phone Number">
                                     </div>
 
                                     <div class="form-group" id="gaddressDiv">
-                                        <label for="gaddress">Guardian's Present Address<span style="color: red">*</span></label>
+                                        <label for="gaddress">Guardian's Present Address<span class="required">*</span></label>
                                         <input type="text" required class="form-control" id="gaddress" name="gaddress" placeholder="Enter guardian's Present Address">
                                     </div>
 
@@ -203,6 +214,10 @@
                 $(element).submit();
             }
             else $('#errorMsg3').slideDown();
+        }
+
+        function closeNotification(e){
+            $(e).slideUp();
         }
 
     </script>

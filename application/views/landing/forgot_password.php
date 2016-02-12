@@ -12,7 +12,7 @@
                 <input type="submit" class="btn btn-lg btn-warning btn-block" value="Submit"/>
             </fieldset>
         </form>
-        <a href="<?php echo base_url() ?>../index.php/user/login" style="margin: 10px 0; display: inline-block">Back
+        <a href="<?php echo base_url() ?>index.php/user/login" style="margin: 10px 0; display: inline-block">Back
             to login</a>
     </div>
 </div>

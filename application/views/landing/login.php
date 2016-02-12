@@ -20,6 +20,6 @@
                 <input type="submit" class="btn btn-lg btn-warning btn-block" value="Login" />
             </fieldset>
         </form>
-        <a href="<?php echo base_url() ?>../index.php/user/forgotPassword" style="margin: 10px 0; display: inline-block">Forgot your password?</a>
+        <a href="<?php echo base_url() ?>index.php/user/forgotPassword" style="margin: 10px 0; display: inline-block">Forgot your password?</a>
     </div>
 </div>

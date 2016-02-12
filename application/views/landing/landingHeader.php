@@ -4,7 +4,7 @@
 
             <div class="row">
                 <div class="col-lg-12 text-center" style="margin-top: 20px;">
-                    <img src="<?php echo base_url() ?>../static/images/header-logo.png">
+                    <img src="<?php echo base_url() ?>static/images/header-logo.png">
                 </div>
             </div>
 
