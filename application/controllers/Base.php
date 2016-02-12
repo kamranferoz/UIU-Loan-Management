@@ -21,7 +21,7 @@ class Base extends CI_Controller {
 
     public function getUserRole(){
         //TODO: query user role and return from here
-        $role = ADMIN_ROLE_TITLE;
+        $role = STUDENT_ROLE_TITLE;
         return $role;
     }
 

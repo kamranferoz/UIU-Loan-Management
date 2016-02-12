@@ -12,10 +12,16 @@ class User extends Base {
 
     public function index()
     {
+        if ($this->isLoggedIn()){
+            redirect('dashboard', 'refresh');
+        }
         redirect('user/login', 'refresh');
     }
 
     public function login(){
+        if ($this->isLoggedIn()){
+            redirect('dashboard', 'refresh');
+        }
         $this->viewLoad('landing/login');
     }
 
@@ -25,6 +31,9 @@ class User extends Base {
     }
 
     public function applyForLoan(){
+        if ($this->isLoggedIn()){
+            redirect('dashboard', 'refresh');
+        }
         $data = array(
             'hide_menu' => 'all'
         );
@@ -32,10 +41,16 @@ class User extends Base {
     }
 
     public function forgotPassword(){
+        if ($this->isLoggedIn()){
+            redirect('dashboard', 'refresh');
+        }
         $this->viewLoad('landing/forgot_password');
     }
 
     public function loanStatus(){
+        if ($this->isLoggedIn()){
+            redirect('dashboard', 'refresh');
+        }
         $data = array(
             'hide_menu' => 'loan_status'
         );
