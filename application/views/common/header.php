@@ -17,6 +17,12 @@
     <!-- MetisMenu CSS -->
     <link href="<?php echo base_url() ?>static/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
 
+    <!-- DataTables CSS -->
+    <link href="<?php echo base_url() ?>static/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
+
+    <!-- DataTables Responsive CSS -->
+    <link href="<?php echo base_url() ?>static/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
+
     <!-- Custom CSS -->
     <link href="<?php echo base_url() ?>static/dist/css/sb-admin-2.css" rel="stylesheet">
 
@@ -36,4 +42,4 @@
 
 <body>
 
-<div id="container">
+    <div id="wrapper">
