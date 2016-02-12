@@ -73,7 +73,7 @@ div#pulldown-menu {
 }
 
 /*hide pulldown menu on mobile devices*/
-@media (max-width: 768px) { /*tablet size defined by theme*/
+@media (max-width: 768px) { /*tablet size defined by static*/
 	#closeMe {
 		display: none;
 	}

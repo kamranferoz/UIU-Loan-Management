@@ -170,11 +170,11 @@ module.exports = function (grunt) {
           strictMath: true,
           sourceMap: true,
           outputSourceFiles: true,
-          sourceMapURL: '<%= pkg.name %>-theme.css.map',
-          sourceMapFilename: 'dist/css/<%= pkg.name %>-theme.css.map'
+          sourceMapURL: '<%= pkg.name %>-static.css.map',
+          sourceMapFilename: 'dist/css/<%= pkg.name %>-static.css.map'
         },
-        src: 'less/theme.less',
-        dest: 'dist/css/<%= pkg.name %>-theme.css'
+        src: 'less/static.less',
+        dest: 'dist/css/<%= pkg.name %>-static.css'
       }
     },
 
@@ -192,7 +192,7 @@ module.exports = function (grunt) {
         options: {
           map: true
         },
-        src: 'dist/css/<%= pkg.name %>-theme.css'
+        src: 'dist/css/<%= pkg.name %>-static.css'
       },
       docs: {
         src: ['docs/assets/css/src/docs.css']
@@ -211,7 +211,7 @@ module.exports = function (grunt) {
       },
       dist: [
         'dist/css/bootstrap.css',
-        'dist/css/bootstrap-theme.css'
+        'dist/css/bootstrap-static.css'
       ],
       examples: [
         'docs/examples/**/*.css'
@@ -239,8 +239,8 @@ module.exports = function (grunt) {
         dest: 'dist/css/<%= pkg.name %>.min.css'
       },
       minifyTheme: {
-        src: 'dist/css/<%= pkg.name %>-theme.css',
-        dest: 'dist/css/<%= pkg.name %>-theme.min.css'
+        src: 'dist/css/<%= pkg.name %>-static.css',
+        dest: 'dist/css/<%= pkg.name %>-static.min.css'
       },
       docs: {
         src: [

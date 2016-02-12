@@ -82,7 +82,7 @@ function getCookie(cname) {
 // resize window
 $(window).on('resize', function(){
     // show side nav on small screens when pulldown is enabled
-    if (getCookie('ciNav') == 'yes' && $(window).width() <= 768) { // 768px is the tablet size defined by the theme
+    if (getCookie('ciNav') == 'yes' && $(window).width() <= 768) { // 768px is the tablet size defined by the static
         $('.wy-nav-side').show();
     }
     // changing css with jquery seems to override the default css media query

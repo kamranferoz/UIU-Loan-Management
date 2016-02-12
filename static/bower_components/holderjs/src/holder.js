@@ -11,7 +11,7 @@ Holder.js - client side image placeholders
 
 	var Holder = {
 		/**
-		 * Adds a theme to default settings
+		 * Adds a static to default settings
 		 *
 		 * @param {string} name Theme name
 		 * @param {Object} theme Theme object, with foreground, background, size, font, and fontweight properties.
@@ -354,10 +354,10 @@ Holder.js - client side image placeholders
 			} else if (App.flags.colors.match(flag)) {
 				var colors = App.flags.colors.output(flag);
 				ret.theme = extend(ret.theme, colors);
-				//todo: convert implicit theme use to a theme: flag
+				//todo: convert implicit static use to a static: flag
 				push = true;
 			} else if (options.themes[flag]) {
-				//If a theme is specified, it will override custom colors
+				//If a static is specified, it will override custom colors
 				if (options.themes.hasOwnProperty(flag)) {
 					ret.theme = extend(options.themes[flag], null);
 				}

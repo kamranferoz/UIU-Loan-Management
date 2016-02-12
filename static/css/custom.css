@@ -1,0 +1,12 @@
+hr{
+    border-top: 1px solid #ccc;
+}
+
+.page-header{
+    border-bottom: 1px solid #ccc;
+}
+
+.login-left-menu{
+    border-right: 1px solid #ccc;
+    margin-top: 35px;
+}
