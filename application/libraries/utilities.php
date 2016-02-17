@@ -8,3 +8,5 @@
 
 define('ADMIN_ROLE_TITLE', 'admin');
 define('STUDENT_ROLE_TITLE', 'student');
+define('LOAN_FOR_STUDENT', 'Debit');
+define('LOAN_PAYMENT_FOR_STUDENT', 'Credit');

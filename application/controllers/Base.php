@@ -8,6 +8,7 @@ class Base extends CI_Controller {
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('UserModel');
     }
 
     public function index()
@@ -15,14 +16,28 @@ class Base extends CI_Controller {
     }
 
     public function isLoggedIn(){
-        //TODO: Implement login check here
-        return true;
+        return $this->getSessionAttr('login');
+    }
+
+    function getSessionAttr($attr) {
+        if ($this->session->userdata("$attr") ) {
+            return $this->session->userdata("$attr");
+        }
+        return false;
     }
 
     public function getUserRole(){
-        //TODO: query user role and return from here
-        $role = STUDENT_ROLE_TITLE;
-        return $role;
+        return $this->getSessionAttr('role');
+    }
+
+    public function getUserId(){
+        return $this->getSessionAttr('user_id');
+    }
+
+    function debug($debugArray){
+        echo "<pre>";
+        print_r($debugArray);
+        echo "</pre>";
     }
 
     public function viewLoad($view, $data = null){
@@ -30,6 +45,7 @@ class Base extends CI_Controller {
             $data['hide_menu'] = '';
         }
         $data['user_role'] = $this->getUserRole();
+        $data['username'] = $this->getSessionAttr('username');
         $this->load->view('common/header');
 
         if (!$this->isLoggedIn()){

@@ -35,6 +35,7 @@ require_once BASEPATH . "../application/libraries/utilities.php";
             <!-- /.dropdown -->
         </ul>
 
+        <div class="navbar-brand navbar-right">Welcome <?php echo $username ?></div>
 
         <?php if ($user_role == ADMIN_ROLE_TITLE) { ?>
         <!-- /.navbar-top-links -->

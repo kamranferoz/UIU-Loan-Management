@@ -22,11 +22,25 @@ class User extends Base {
         if ($this->isLoggedIn()){
             redirect('dashboard', 'refresh');
         }
-        $this->viewLoad('landing/login');
+
+        $data = array();
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+            if ($this->UserModel->login()) {
+                redirect('dashboard', 'refresh');
+            } else {
+                $data['error'] = 'Invalid Username or password.';
+            }
+        } else {
+            $data['notification'] = 'Please enter your username and password to login.';
+        }
+
+        $this->viewLoad('landing/login', $data);
     }
 
     public function logout(){
-        //TODO: Add successful logout message
+        if ($this->isLoggedIn()){
+            $this->session->sess_destroy();
+        }
         redirect('user/login', 'refresh');
     }
 

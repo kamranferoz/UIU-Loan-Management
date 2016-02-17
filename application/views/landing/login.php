@@ -2,14 +2,25 @@
     <div class="panel-heading">
         <h2 class="panel-title">Already have an account?</h2>
     </div>
+
+    <div class="alert alert-danger alert-dismissable" style="display: <?php echo isset($error) ? 'block' : 'none'; ?>">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <?php echo $error ?>
+    </div>
+
+    <div class="alert alert-info alert-dismissable" style="display: <?php echo isset($notification) ? 'block' : 'none'; ?>">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <?php echo $notification ?>
+    </div>
+
     <div class="panel-body">
-        <form role="form">
+        <form role="form" method="post" action="<?php echo base_url() ?>index.php/user/login">
             <fieldset>
                 <div class="form-group">
-                    <input class="form-control" placeholder="Username" name="username" type="text" autofocus>
+                    <input class="form-control" placeholder="Username" name="username" type="text" autofocus required>
                 </div>
                 <div class="form-group">
-                    <input class="form-control" placeholder="Password" name="password" type="password" value="">
+                    <input class="form-control" placeholder="Password" name="password" type="password" value="" required>
                 </div>
                 <div class="checkbox">
                     <label>
