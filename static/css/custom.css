@@ -1,12 +1,40 @@
+body::after{
+    background: url("../images/background.png") repeat;
+    content: "";
+    opacity: 0.5;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: -1;
+}
+
 hr{
-    border-top: 1px solid #ccc;
+    border-top: 1px solid #FFFFFF;
 }
 
 .page-header{
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #FFFFFF;
+}
+
+.landingRightPanel{
+    border-left: 1px solid #FFFFFF;
 }
 
 .login-left-menu{
-    border-right: 1px solid #ccc;
     margin-top: 35px;
+}
+
+#accordion{
+    font-size: 1.5em;
+}
+
+#accordion h4{
+    color: #fdb11e;;
+    font-size: 1.3em;
+}
+
+.custom_panel_heading{
+    font-size: 1.5em;
+    font-weight: bold;
 }

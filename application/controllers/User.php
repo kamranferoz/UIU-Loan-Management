@@ -23,7 +23,9 @@ class User extends Base {
             redirect('dashboard', 'refresh');
         }
 
-        $data = array();
+        $data = array(
+            'hide_menu' => 'login'
+        );
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             if ($this->UserModel->login()) {
                 redirect('dashboard', 'refresh');
@@ -49,7 +51,7 @@ class User extends Base {
             redirect('dashboard', 'refresh');
         }
         $data = array(
-            'hide_menu' => 'all'
+            'hide_menu' => 'apply'
         );
         $this->viewLoad('landing/apply', $data);
     }
@@ -73,7 +75,7 @@ class User extends Base {
 
     public function faq(){
         $data = array(
-            'hide_menu' => 'all'
+            'hide_menu' => 'faq'
         );
         $this->viewLoad('landing/faq', $data);
     }
