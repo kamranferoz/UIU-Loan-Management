@@ -2,15 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3cebc17b-d7cd-4598-82c3-d32ef089a22a" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/controllers/User.php" afterPath="$PROJECT_DIR$/application/controllers/User.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/landing/apply.php" afterPath="$PROJECT_DIR$/application/views/landing/apply.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/images/background.png" afterPath="$PROJECT_DIR$/static/images/background.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/css/custom.css" afterPath="$PROJECT_DIR$/static/css/custom.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/landing/faq.php" afterPath="$PROJECT_DIR$/application/views/landing/faq.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/landing/forgot_password.php" afterPath="$PROJECT_DIR$/application/views/landing/forgot_password.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/landing/landingLeftMenu.php" afterPath="$PROJECT_DIR$/application/views/landing/landingLeftMenu.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/landing/loan_status.php" afterPath="$PROJECT_DIR$/application/views/landing/loan_status.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/landing/login.php" afterPath="$PROJECT_DIR$/application/views/landing/login.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="uiu_loan_management.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -78,20 +71,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="custom.css" pinned="false" current-in-tab="false">
+      <file leaf-file-name="custom.css" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/static/css/custom.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.06559767">
+              <caret line="3" column="17" selection-start-line="3" selection-start-column="17" selection-end-line="3" selection-end-column="17" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="forgot_password.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="forgot_password.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/views/landing/forgot_password.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.04531722">
+            <state vertical-scroll-proportion="-1.25">
               <caret line="2" column="51" selection-start-line="2" selection-start-column="51" selection-end-line="2" selection-end-column="51" />
               <folding />
             </state>
@@ -177,7 +170,6 @@
         <option value="$PROJECT_DIR$/application/controllers/dashboard.php" />
         <option value="$PROJECT_DIR$/application/views/student/dashboard.php" />
         <option value="$PROJECT_DIR$/application/controllers/User.php" />
-        <option value="$PROJECT_DIR$/static/css/custom.css" />
         <option value="$PROJECT_DIR$/application/views/landing/landingFooter.php" />
         <option value="$PROJECT_DIR$/application/views/landing/apply.php" />
         <option value="$PROJECT_DIR$/application/views/landing/loan_status.php" />
@@ -185,6 +177,7 @@
         <option value="$PROJECT_DIR$/application/views/landing/login.php" />
         <option value="$PROJECT_DIR$/application/views/landing/landingLeftMenu.php" />
         <option value="$PROJECT_DIR$/application/views/landing/forgot_password.php" />
+        <option value="$PROJECT_DIR$/static/css/custom.css" />
       </list>
     </option>
   </component>
@@ -890,18 +883,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/css/custom.css">
+    <entry file="file://$PROJECT_DIR$/application/views/landing/forgot_password.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+        <state vertical-scroll-proportion="-1.25">
+          <caret line="2" column="51" selection-start-line="2" selection-start-column="51" selection-end-line="2" selection-end-column="51" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/landing/forgot_password.php">
+    <entry file="file://$PROJECT_DIR$/static/css/custom.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.04531722">
-          <caret line="2" column="51" selection-start-line="2" selection-start-column="51" selection-end-line="2" selection-end-column="51" />
+        <state vertical-scroll-proportion="0.06559767">
+          <caret line="3" column="17" selection-start-line="3" selection-start-column="17" selection-end-line="3" selection-end-column="17" />
           <folding />
         </state>
       </provider>
