@@ -53,6 +53,12 @@ class User extends Base {
         $data = array(
             'hide_menu' => 'apply'
         );
+
+        if ($error = $this->getSessionAttr('error')){
+            $data['error'] = $error;
+            $this->unsetSessionAttr('error');
+        }
+
         $this->viewLoad('landing/apply', $data);
     }
 
@@ -78,5 +84,19 @@ class User extends Base {
             'hide_menu' => 'faq'
         );
         $this->viewLoad('landing/faq', $data);
+    }
+    public function newLoanApplication(){
+        $data = array(
+            'hide_menu' => 'applyFormSubmit'
+        );
+
+        $loanApplicationStatus = $this->UserModel->newLoanApplication();
+
+        if ($loanApplicationStatus === true) {
+            $this->viewLoad('landing/loanApplicationSuccessful', $data);
+        } else {
+            $this->setSessionAttr("error", "$loanApplicationStatus");
+            redirect('user/applyForLoan', 'refresh');
+        }
     }
 }

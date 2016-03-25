@@ -3,7 +3,13 @@
         <div class="panel-heading custom_panel_heading">
             Applicant's Detail
         </div>
-        <form role="form" id="loanForm" method="post" action="">
+        <form role="form" id="loanForm" method="post" action="<?php echo base_url() ?>index.php/user/newLoanApplication">
+            <div class="panel-body" style="display: <?php echo isset($error) ? "block" : "none"; ?>">
+                <div class="alert alert-danger alert-dismissable" style="margin-bottom: 0;">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <?php if (isset($error)) echo $error; ?>
+                </div>
+            </div>
             <!-- .panel-heading -->
             <div class="panel-body">
                 <div class="panel-group" id="accordion">
@@ -36,6 +42,11 @@
                                     <input type="text" required class="form-control" id="student_id" name="student_id" placeholder="Enter your university ID">
                                 </div>
 
+                                <div class="form-group col-xs-10" id="student_cgpaDiv">
+                                    <label>Student CGPA <span class="required">*</span></label>
+                                    <input type="number"step="0.01"maxlength="4" required class="form-control" id="student_cgpa" name="student_cgpa" placeholder="Enter your CGPA">
+                                </div>
+
                                 <div class="form-group col-xs-10" id="emailDiv">
                                     <label>Email <span class="required">*</span></label>
                                     <input type="email" required class="form-control" id="email" name="email" placeholder="Enter your email">
@@ -49,6 +60,11 @@
                                 <div class="form-group col-xs-10" id="students_present_addressDiv">
                                     <label for="students_present_address">Student's Present Address <span class="required">*</span></label></label>
                                     <input type="text" required class="form-control" id="students_present_address" name="students_present_address" placeholder="Enter your Present Address">
+                                </div>
+
+                                <div class="form-group col-xs-10" id="student_phoneDiv">
+                                    <label for="student_phone">Phone Number <span class="required">*</span></label>
+                                    <input type="text" required class="form-control" id="student_phone" name="student_phone" placeholder="Enter your Phone Number">
                                 </div>
 
                                 <div class="form-group col-xs-10" id="students_permanent_addressDiv">
@@ -84,19 +100,19 @@
                                 </div>
                                 <div class="form-group col-xs-10">
                                     <label>Tenor</label>
-                                    <select class="form-control">
-                                        <option value="4 months">Within 4 months</option>
-                                        <option value="6 months">Within 6 months</option>
-                                        <option value="1 year">Within 1 year</option>
-                                        <option value="2 years">Within 2 years</option>
-                                        <option value="3 years">Within 3 years</option>
-                                        <option value="4 years">Within 4 years</option>
+                                    <select class="form-control" id="tenor" name="tenor">
+                                        <option value="4">Within 4 months</option>
+                                        <option value="6">Within 6 months</option>
+                                        <option value="12">Within 1 year</option>
+                                        <option value="24">Within 2 years</option>
+                                        <option value="36">Within 3 years</option>
+                                        <option value="48">Within 4 years</option>
                                     </select>
                                 </div>
 
                                 <div class="form-group col-xs-10" id="reasonDiv">
                                     <label for="reason">Reason <span class="required">*</span></label>
-                                    <textarea id="reason" required class="form-control" rows="3" placeholder="Enter your reason.."></textarea>
+                                    <textarea id="reason" required class="form-control" rows="3" placeholder="Enter your reason.." name="reason"></textarea>
                                 </div>
                                 <div class="clearfix"></div>
 

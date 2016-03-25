@@ -9,7 +9,7 @@
             </a>
         </div>
     <?php } ?>
-    <?php if ($hide_menu != 'apply') { ?>
+    <?php if ($hide_menu != 'apply' && $hide_menu != 'applyFormSubmit') { ?>
         <div class="row" style="margin: 10px 0px 10px 10px;">
             <a href="<?php echo base_url() ?>index.php/user/applyForLoan">
                 <button type="button" class="btn btn-success btn-group-xs" style="float: left"><i class="fa fa-2x fa-money"></i>
@@ -37,7 +37,7 @@
         </div>
     <?php } ?>
 
-    <?php if ($hide_menu == 'apply') { ?>
+     <?php if ($hide_menu == 'apply') { ?>
         <div class="row"  style="margin: 10px 0px 10px 10px;">
             <img width="275" src="<?php echo base_url() ?>static/images/applyNow.png"/>
         </div>

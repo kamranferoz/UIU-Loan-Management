@@ -26,6 +26,14 @@ class Base extends CI_Controller {
         return false;
     }
 
+    function setSessionAttr($attr, $value) {
+        return $this->session->set_userdata("$attr", $value);
+    }
+
+    function unsetSessionAttr($attr) {
+        return $this->session->unset_userdata("$attr");
+    }
+
     public function getUserRole(){
         return $this->getSessionAttr('role');
     }
