@@ -38,6 +38,22 @@ class UserModel extends BaseModel
         }
         return false;
     }
+
+    function checkLoanStatus(){
+        $student_id = $this->postGet('student_id');
+        $this->db->select('loan.status');
+        $this->db->from('loan');
+        $this->db->join("personal_info p", "p.user_id = loan.user_id", "left");
+        $this->db->where('p.student_id', $student_id);
+        $res = $this->db->get();
+
+        foreach ($res->result() as $key => $value){
+            return $value->status . ".";
+        }
+
+        return false;
+    }
+
     function newLoanApplication(){
         /*
          *  TODO:
@@ -45,120 +61,158 @@ class UserModel extends BaseModel
             Email to the applicant with the information (unique loan id)
         */
 
-        $fname = $this->postGet('fname');
-        $lname = $this->postGet('lname');
-        $nid = $this->postGet('nid');
-        $student_id = $this->postGet('student_id');
-        $student_cgpa = $this->postGet('student_cgpa');
-        $student_phone = $this->postGet('student_phone');
-        $students_present_address = $this->postGet('students_present_address');
-        $students_permanent_address = $this->postGet('students_permanent_address');
+        $genericErrorMessage = "An error found. Please try again later!";
 
-        $loan_amount = $this->postGet('loan_amount');
-        $tenor = $this->postGet('tenor');
-        $reason = $this->postGet('reason');
+        $data = $this->getData();
+        if ( ($errorMessage = $this->validLoanApplicationData($data)) !== true ) return $errorMessage;
 
-        $gname = $this->postGet('gname');
-        $relation = $this->postGet('relation');
-        $gphone = $this->postGet('gphone');
-        $gaddress = $this->postGet('gaddress');
-
-        if ($student_id == ''){
-            return 'Student id is required.';
-        }
-        if ($fname == ''){
-            return 'First name is required.';
-        }
-        if ($lname == ''){
-            return 'Last name is required.';
-        }
-        if ($student_cgpa == ''){
-            return 'Students CGPA is required.';
-        }
-        if ($student_phone == ''){
-            return 'Students phone number is required.';
-        }
-        if ($students_present_address == ''){
-            return 'Students present address is required.';
-        }
-        if ($loan_amount == ''){
-            return 'Loan amount is required.';
-        }
-        if ($reason == ''){
-            return 'Reason is required.';
-        }
-        if ($gname == ''){
-            return 'Guardians name is required.';
-        }
-        if ($relation == ''){
-            return 'Relation is required.';
-        }
-        if ($gphone == ''){
-            return 'guardians phone number is required.';
-        }
-        if ($gaddress == ''){
-            return 'guardians address is required.';
-        }
+        /* User Information Creation Started */
 
         $userData = array(
             'username' => time(),
-            'password' => md5($student_id),
+            'password' => md5($data['student_id']),
             'email' => $this->postGet('email'),
-            'role_id' => '2'
+            'role_id' => '2',
+            'created_time' => time(),
+            'modified_time' => time(),
         );
 
-        $user_id = $this->db->insert('users', $userData);
+        $userCreated = $this->db->insert('users', $userData);
 
-        if (!$user_id){
-            return "An error found. Please try again later!";
+        if (!$userCreated){
+            return $genericErrorMessage;
         }
+
+        $user_id = $this->db->insert_id();
+
+        /* User Information Creation Ended */
+
+        /* Personal Information Creation Ended */
 
         $personal_info_data = array(
             'user_id' => $user_id,
-            'firstname' => $fname ,
-            'lastname' => $lname ,
-            'national_id' => $nid ,
-            'student_id' => $student_id ,
-            'student_cgpa' => $student_cgpa ,
-            'present_address' => $students_present_address,
-            'parmanent_address' => $students_permanent_address,
-            'phone' => $student_phone
+            'firstname' => $data['fname'] ,
+            'lastname' => $data['lname'] ,
+            'national_id' => $data['nid'] ,
+            'student_id' => $data['student_id'] ,
+            'student_cgpa' => $data['student_cgpa'] ,
+            'present_address' => $data['students_present_address'],
+            'permanent_address' => $data['students_permanent_address'],
+            'phone' => $data['student_phone']
         );
 
-        $personal_info_id = $this->db->insert('personal_info', $personal_info_data);
+        $personal_info_created = $this->db->insert('personal_info', $personal_info_data);
 
-        if (!$personal_info_data){
-            return "An error found. Please try again later!";
+        if (!$personal_info_created){
+            return $genericErrorMessage;
         }
+
+        /* Personal Information Creation Ended */
+
+        /* Loan Application Creation Started */
 
         $loan_data = array(
             'user_id' => $user_id,
-            'amount' => $loan_amount ,
-            'installment_amount' => ($loan_amount / $tenor),
-            'tenor' => $tenor ,
-            'note' => $reason
+            'amount' => $data['loan_amount'] ,
+            'installment_amount' => ($data['loan_amount'] / $data['tenor']),
+            'tenor' => $data['tenor'] ,
+            'note' => $data['reason']
         );
 
-        $loan_id = $this->db->insert('loan', $loan_data);
+        $loanApplicationSubmitted = $this->db->insert('loan', $loan_data);
 
-        if (!$loan_data){
-            return "An error found. Please try again later!";
+        if (!$loanApplicationSubmitted){
+            return $genericErrorMessage;
         }
+
+        $loan_id = $this->db->insert_id();
+
+        /* Loan Application Creation Ended */
+
+        /* Loan Guarantor Creation Started */
 
         $loan_guarantor_data = array(
             'loan_id' => $loan_id ,
-            'guarantor_name' => $gname ,
-            'relation' => $relation,
-            'guarantor_contact_no' => $gphone ,
-            'guarantor_address' => $gaddress
+            'guarantor_name' => $data['gname'] ,
+            'relation' => $data['relation'],
+            'guarantor_contact_no' => $data['gphone'] ,
+            'guarantor_address' => $data['gaddress']
         );
 
-        $loan_guarantor_id = $this->db->insert('loan_guarantor', $loan_guarantor_data);
+        $loan_guarantor_created = $this->db->insert('loan_guarantor', $loan_guarantor_data);
 
-        if (!$loan_guarantor_data){
-            return "An error found. Please try again later!";
+        if (!$loan_guarantor_created){
+            return $genericErrorMessage;
+        }
+
+        /* Loan Guarantor Creation Ended */
+
+        return true;
+    }
+
+    function validLoanApplicationData($data){
+        if ( ($status = $this->validateRequired($data) !== true) ) return $status;
+        if ( ($status = $this->validateEmail($data) !== true) ) return $status;
+        return true;
+    }
+
+    function validateRequired($data){
+        $required = array(
+            'student_id', 'fname', 'lname', 'student_id', 'student_cgpa',
+            'student_phone', 'students_present_address', 'loan_amount',
+            'tenor', 'reason', 'gname', 'relation', 'gphone', 'gaddress',
+        );
+
+        foreach ($required as $key => $value) {
+            if (!isset($data[$value]) || $data[$value] == '') {
+                return ucwords(str_replace("_", " ", $value)) . " is required.";
+            }
         }
 
         return true;
+    }
+
+    function validateEmail($data){
+        $email = array('email');
+
+        foreach ($email as $key => $value){
+            if (!filter_var($data[$value], FILTER_VALIDATE_EMAIL)) {
+                return ucwords(str_replace("_", " ", $value)) . " is invalid.";
+            }
+        }
+
+        return true;
+    }
+
+    function getData(){
+        $tenor = array(
+            '4' => '4 Months',
+            '6' => '6 Months',
+            '12' => '1 Year',
+            '24' => '2 Years',
+            '36' => '3 Years',
+            '48' => '4 Years',
+        );
+
+        $data = array();
+
+        $data['fname'] = $this->postGet('fname');
+        $data['lname'] = $this->postGet('lname');
+        $data['nid'] = $this->postGet('nid');
+        $data['student_id'] = $this->postGet('student_id');
+        $data['student_cgpa'] = $this->postGet('student_cgpa');
+        $data['student_phone'] = $this->postGet('student_phone');
+        $data['students_present_address'] = $this->postGet('students_present_address');
+        $data['students_permanent_address'] = $this->postGet('students_permanent_address');
+        $data['loan_amount'] = $this->postGet('loan_amount');
+        $data['tenor'] = $tenor[$this->postGet('tenor')];
+        $data['reason'] = $this->postGet('reason');
+        $data['gname'] = $this->postGet('gname');
+        $data['relation'] = $this->postGet('relation');
+        $data['gphone'] = $this->postGet('gphone');
+        $data['gaddress'] = $this->postGet('gaddress');
+        $data['email'] = $this->postGet('email');
+
+        return $data;
     }
 }

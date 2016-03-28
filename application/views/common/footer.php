@@ -5,13 +5,10 @@
 <div class="row">
     <div class="col-lg-10 col-md-offset-1">
         <hr/>
-        <h5 class="text-center">Copyright &copy; 2016 United International University.</h5>
+        <h5 class="text-center" style="font-weight: bold;">Copyright &copy; 2016 United International University.</h5>
     </div>
     <!-- /.col-lg-12 -->
 </div>
-
-<!-- jQuery -->
-<script src="<?php echo base_url() ?>static/bower_components/jquery/dist/jquery.min.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
 <script src="<?php echo base_url() ?>static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -31,7 +28,8 @@
     $(document).ready(function() {
         if (typeof dataTable != 'undefined'){
             $('#' + dataTable).DataTable({
-                responsive: true
+                responsive: true,
+                "lengthMenu": [ 5, 10, 25, 50, 75, 100 ]
             });
         }
     });

@@ -20,7 +20,11 @@ class User extends Base {
 
     public function login(){
         if ($this->isLoggedIn()){
-            redirect('dashboard', 'refresh');
+            if ($this->getUserRole() == STUDENT_ROLE_TITLE) {
+                redirect('StudentDashboard', 'refresh');
+            } else if ($this->getUserRole() == ADMIN_ROLE_TITLE){
+                redirect('AdminDashboard', 'refresh');
+            }
         }
 
         $data = array(
@@ -28,7 +32,11 @@ class User extends Base {
         );
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             if ($this->UserModel->login()) {
-                redirect('dashboard', 'refresh');
+                if ($this->getUserRole() == STUDENT_ROLE_TITLE) {
+                    redirect('StudentDashboard', 'refresh');
+                } else if ($this->getUserRole() == ADMIN_ROLE_TITLE){
+                    redirect('AdminDashboard', 'refresh');
+                }
             } else {
                 $data['error'] = 'Invalid Username or password.';
             }
@@ -76,6 +84,16 @@ class User extends Base {
         $data = array(
             'hide_menu' => 'loan_status'
         );
+
+        if (strtolower($this->input->method()) == 'post'){
+            $message = $this->UserModel->checkLoanStatus();
+            if ($message == false){
+                $data['error'] = "Provided student ID doesn't match with any record.";
+            } else {
+                $data['success'] = $message;
+            }
+        }
+
         $this->viewLoad('landing/loan_status', $data);
     }
 

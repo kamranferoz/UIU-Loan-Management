@@ -17,11 +17,14 @@
     <!-- MetisMenu CSS -->
     <link href="<?php echo base_url() ?>static/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
 
+    <!-- Timeline CSS -->
+    <link href="<?php echo base_url() ?>static/dist/css/timeline.css" rel="stylesheet">
+
     <!-- DataTables CSS -->
     <link href="<?php echo base_url() ?>static/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
 
     <!-- DataTables Responsive CSS -->
-    <link href="<?php echo base_url() ?>static/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
+    <!--<link href="<?php /*echo base_url() */?>static/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">-->
 
     <!-- Custom CSS -->
     <link href="<?php echo base_url() ?>static/dist/css/sb-admin-2.css" rel="stylesheet">
@@ -38,6 +41,12 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <!-- jQuery -->
+    <script src="<?php echo base_url() ?>static/bower_components/jquery/dist/jquery.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>static/datepicker/jquery.datepick.css">
+    <script type="text/javascript" src="<?php echo base_url() ?>static/datepicker/jquery.plugin.js"></script>
+    <script type="text/javascript" src="<?php echo base_url() ?>static/datepicker/jquery.datepick.js"></script>
 </head>
 
 <body>

@@ -1,7 +1,7 @@
-<div id="page-wrapper" style="margin-left: 0;">
+<div id="page-wrapper" style="margin-left: 0; padding: 10px; border-left: 0;" class="active">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Loan Transactions</h1>
+            <h1 class="page-header" style="color: #FFF;">Loan Summary</h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>
@@ -58,7 +58,7 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    DataTables Advanced Tables
+                    Loan Transactions
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">

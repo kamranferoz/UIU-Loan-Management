@@ -1,16 +1,16 @@
 <div class="col-lg-8 landingRightPanel">
     <div class="panel-heading">
-        <h2 class="panel-title">Already have an account?</h2>
+        <h2 class="panel-title"><strong>Already have an account?</strong></h2>
     </div>
 
     <div class="alert alert-danger alert-dismissable" style="display: <?php echo isset($error) ? 'block' : 'none'; ?>">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-        <?php echo $error ?>
+        <strong><?php echo $error ?></strong>
     </div>
 
-    <div class="alert alert-info alert-dismissable" style="display: <?php echo isset($notification) ? 'block' : 'none'; ?>">
+    <div class="alert alert-warning alert-dismissable" style="display: <?php echo isset($notification) ? 'block' : 'none'; ?>">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-        <?php echo $notification ?>
+        <strong><?php echo $notification ?></strong>
     </div>
 
     <div class="panel-body">
@@ -25,14 +25,14 @@
                     <input class="form-control input-lg" placeholder="Password" name="password" type="password" value="" required>
                 </div>
                 <div class="checkbox">
-                    <label>
+                    <label style="font-size: 1.2em;">
                         <input name="remember" class="fa-2x" type="checkbox" value="Remember Me">Remember Me
                     </label>
                 </div>
                 <!-- Change this to a button or input when using this as a form -->
-                <input type="submit" class="btn btn-lg btn-warning btn-block" value="Login" />
+                <input type="submit" class="btn btn-lg btn-warning btn-block uiu_button" value="Login" />
             </fieldset>
         </form>
-        <a href="<?php echo base_url() ?>index.php/user/forgotPassword" style="margin: 10px 0; display: inline-block">Forgot your password?</a>
+        <a href="<?php echo base_url() ?>index.php/user/forgotPassword" style="margin: 10px 0; display: inline-block; color: #000; font-size: 1.2em;">Forgot your password?</a>
     </div>
 </div>

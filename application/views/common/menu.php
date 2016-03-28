@@ -3,7 +3,7 @@ require_once BASEPATH . "../application/libraries/utilities.php";
 ?>
 
     <!-- Navigation -->
-    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+    <nav class="navbar navbar-default navbar-static-top activeSquare" role="navigation" style="margin-bottom: 0">
 
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -12,7 +12,7 @@ require_once BASEPATH . "../application/libraries/utilities.php";
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">United International University</a>
+            <a class="navbar-brand" href="#">United International University - Loan Management System</a>
         </div>
         <!-- /.navbar-header -->
 
@@ -21,10 +21,8 @@ require_once BASEPATH . "../application/libraries/utilities.php";
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                     <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                 </a>
-                <ul class="dropdown-menu dropdown-user">
+                <ul class="dropdown-menu dropdown-user activeSquare">
                     <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                    </li>
-                    <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                     </li>
                     <li class="divider"></li>
                     <li><a href="<?php echo base_url() ?>index.php/user/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
@@ -43,16 +41,25 @@ require_once BASEPATH . "../application/libraries/utilities.php";
             <div class="sidebar-nav navbar-collapse">
                 <ul class="nav" id="side-menu">
                     <li>
-                        <a href="<?php echo base_url() ?>index.php/dashboard"><i class="fa fa-th-list fa-fw"></i> New Loan Applications</a>
+                        <a href="<?php echo base_url() ?>index.php/AdminDashboard/newApplicant"><i class="fa fa-th-list fa-fw"></i> New Loan Applications</a>
                     </li>
                     <li>
-                        <a href="<?php echo base_url() ?>index.php/dashboard"><i class="fa fa-recycle fa-fw"></i> Processing Loan Queue</a>
+                        <a href="<?php echo base_url() ?>index.php/AdminDashboard/processingApplication"><i class="fa fa-recycle fa-fw"></i> Processing Loan Queue</a>
                     </li>
                     <li>
-                        <a href="<?php echo base_url() ?>index.php/dashboard"><i class="fa fa-check fa-fw"></i> Existing Loan Queue</a>
+                        <a href="<?php echo base_url() ?>index.php/AdminDashboard/existingLoan"><i class="fa fa-check fa-fw"></i> Existing Loan Queue</a>
                     </li>
                     <li>
-                        <a href="<?php echo base_url() ?>index.php/dashboard"><i class="fa fa-times fa-fw"></i> Declined Loan Queue</a>
+                        <a href="<?php echo base_url() ?>index.php/AdminDashboard/declinedApplication"><i class="fa fa-times fa-fw"></i> Declined Loan Queue</a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url() ?>index.php/AdminDashboard/loanDebt"><i class="fa fa-thumbs-down fa-fw"></i> Debt Loan Queue</a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url() ?>index.php/AdminDashboard/loanReturned"><i class="fa fa-child fa-fw"></i> Returned Loan</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> UIU Loan Statistics</a>
                     </li>
                 </ul>
             </div>
