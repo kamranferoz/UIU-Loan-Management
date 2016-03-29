@@ -22,16 +22,27 @@ class AdminModel extends BaseModel
         $this->db->select("*");
         $this->db->from("loan");
         $this->db->join("personal_info p", "p.user_id = loan.user_id", "left");
+        $this->db->join("loan_guarantor g", "g.loan_id = loan.id", "left");
         $this->db->join("users", "users.id = loan.user_id", "left");
         $this->db->where('loan.status', $status);
         $res = $this->db->get('');
 
         foreach ($res->result() as $row) {
             $currentApplication = array(
+                'fullname' => $row->firstname . " " . $row->lastname,
                 'user_id' => $row->user_id,
                 'student_id' => $row->student_id,
                 'cgpa' => $row->student_cgpa,
                 'phone' => $row->phone,
+                'email' => $row->email,
+                'permanent_address'=> $row->permanent_address,
+                'present_address' => $row->present_address,
+                'note' => $row->note,
+                'status' => $row->status,
+                'guarantor_name' => $row->guarantor_name,
+                'relation' => $row->relation,
+                'guarantor_contact_no' => $row->guarantor_contact_no,
+                'guarantor_address' => $row->guarantor_address,
                 'amount' => $row->amount,
                 'tenor' => $row->tenor,
                 'date_taken' => date("jS F, Y", $row->approved_date),
@@ -102,6 +113,37 @@ class AdminModel extends BaseModel
             $this->db->where('user_id', $loan_application_user_id);
             $this->db->update('loan', $data);
         }
+
+        return true;
+    }
+
+    function writeCSV($data){
+        $fileName = FCPATH . "export/data.csv";;
+
+        $list = array(
+            0 => array('Student Name', 'Student ID', 'CGPA', 'Email', 'Phone', 'Present Address', 'Permanent Address',
+            'Loan Amount', 'Loan Tenor', 'Loan Reason', 'Loan Status',
+            'Loan Guarantor Name', 'Loan Guarantor Relation', 'Loan Guarantor Contact No.', 'Loan Guarantor Address')
+        );
+
+        foreach ($data as $key => $value) {
+            $list[] = array(
+                $value['fullname'], $value['student_id'], $value['cgpa'], $value['email'], $value['phone'], $value['present_address'],$value['permanent_address'],
+                $value['amount'], $value['tenor'], $value['note'], $value['status'],
+                $value['guarantor_name'], $value['relation'], $value['guarantor_contact_no'], $value['guarantor_address'],
+            );
+        }
+
+        $fp = fopen($fileName, 'w');
+
+        foreach ($list as $fields) {
+            $status = fputcsv($fp, $fields);
+            if ($status === false) {
+                return false;
+            }
+        }
+
+        fclose($fp);
 
         return true;
     }

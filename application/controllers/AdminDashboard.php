@@ -19,12 +19,21 @@ class AdminDashboard extends Base
         redirect('AdminDashboard/newApplicant', 'refresh');
     }
 
+    protected function getErrors(){
+        if ( ($error = $this->getSessionAttr('error')) != false){
+            $this->unsetSessionAttr('error');
+        }
+
+        return $error;
+    }
+
     public function newApplicant()
     {
         $newApplication = array();
         $newApplication['application'] = $this->AdminModel->getApplications();
         $newApplication['menuTitle'] = 'New Loan Application';
-        $newApplication['item'] = 1;
+        $newApplication['item'] = 0;
+        $newApplication['error'] = $this->getErrors();
         $this->viewLoad('admin/dashboard', $newApplication);
     }
 
@@ -33,7 +42,8 @@ class AdminDashboard extends Base
         $processing = array();
         $processing['application'] = $this->AdminModel->getApplications(PROCESSING_LOAN);
         $processing['menuTitle'] = 'Application in Processing';
-        $processing['item'] = 2;
+        $processing['item'] = 1;
+        $processing['error'] = $this->getErrors();
         $this->viewLoad('admin/dashboard', $processing);
     }
 
@@ -42,7 +52,8 @@ class AdminDashboard extends Base
         $existing = array();
         $existing['application'] = $this->AdminModel->getApplications(EXISTING_LOAN);
         $existing['status'] = 'existing';
-        $existing['item'] = 3;
+        $existing['item'] = 2;
+        $existing['error'] = $this->getErrors();
         $existing['menuTitle'] = 'Current Loan';
         $this->viewLoad('admin/dashboard', $existing);
     }
@@ -52,7 +63,8 @@ class AdminDashboard extends Base
         $declined = array();
         $declined['application'] = $this->AdminModel->getApplications(DECLINED_LOAN);
         $declined['menuTitle'] = 'Declined Loan Queue';
-        $declined['item'] = 4;
+        $declined['error'] = $this->getErrors();
+        $declined['item'] = 3;
         $this->viewLoad('admin/dashboard', $declined);
     }
 
@@ -61,16 +73,18 @@ class AdminDashboard extends Base
         $debt = array();
         $debt['application'] = $this->AdminModel->getApplications(DEBT_LOAN);
         $debt['menuTitle'] = 'Loan in Debt';
-        $debt['item'] = 5;
+        $debt['error'] = $this->getErrors();
+        $debt['item'] = 4;
         $this->viewLoad('admin/dashboard', $debt);
     }
 
-    public function loanReturned()
+    public function loanRefunded()
     {
         $returned = array();
         $returned['application'] = $this->AdminModel->getApplications(RETURNED_LOAN);
         $returned['menuTitle'] = 'Returned Loan';
-        $returned['item'] = 6;
+        $returned['error'] = $this->getErrors();
+        $returned['item'] = 5;
         $this->viewLoad('admin/dashboard', $returned);
     }
 
@@ -97,6 +111,32 @@ class AdminDashboard extends Base
     }
 
     public function download(){
-        $item = $this->uri->segment(3);
+        $item = $this->uri->segment(3, 0);
+        global $exportItem;
+        $status = $exportItem[$item];
+
+        $data = $this->AdminModel->getApplications($status);
+        $writeSuccess = $this->AdminModel->writeCSV($data);
+
+        if ($writeSuccess == true) {
+            $file = FCPATH . "export/data.csv";
+
+            if (file_exists($file)) {
+                header('Content-Description: File Transfer');
+                header('Content-Type: application/octet-stream');
+                header('Content-Disposition: attachment; filename="UIU_Loan_Applications_'.time().'.csv"');
+                header('Expires: 0');
+                header('Cache-Control: must-revalidate');
+                header('Pragma: public');
+                header('Content-Length: ' . filesize($file));
+                readfile($file);
+                exit;
+            }
+        } else {
+            $actionName = array('newApplicant', 'processingApplication', 'existingLoan', 'declinedApplication',
+                'loanDebt', 'loanRefunded');
+            $this->setSessionAttr('error', 'Sorry! Internal Server Error. Please try again later');
+            redirect("AdminDashboard/{$actionName[$status]}", 'refresh');
+        }
     }
 }

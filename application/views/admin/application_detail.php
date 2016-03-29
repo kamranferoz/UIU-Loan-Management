@@ -3,6 +3,7 @@
     <div class="panel panel-default">
     <div class="panel-heading">
         <i class="fa fa-clock-o fa-fw"></i> Application Details
+        <a target="_blank" href="#" style="float: right; color: #FFFFFF">Download as PDF Form</a>
     </div>
     <!-- /.panel-heading -->
     <div class="panel-body" style="display: <?php echo isset($error) ? "block" : "none"; ?>">

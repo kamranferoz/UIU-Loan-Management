@@ -4,8 +4,8 @@
             <div class="panel panel-default">
                 <div class="panel-heading" style="color: #FFFFFF;">
                     <?php echo $menuTitle ?>
-                    <!--<a href="<?php /*echo base_url() */?>index.php/AdminDashboard/download/<?php /*echo $item */?>" style="float: right;">Export as CSV</a>-->
-                    <a href="#" style="float: right; color: #FFFFFF">Export as CSV</a>
+                    <a target="_blank" href="<?php echo base_url() ?>index.php/AdminDashboard/download/<?php echo $item ?>" style="float: right;">Export as CSV</a>
+                    <!--<a href="#" style="float: right; color: #FFFFFF">Export as CSV</a>-->
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
@@ -13,6 +13,7 @@
                         <table class="table table-striped table-bordered table-hover" id="adminDashboardDataTables">
                             <thead>
                             <tr>
+                                <th>Student Name</th>
                                 <th>Student ID</th>
                                 <th>CGPA</th>
                                 <th>Phone</th>
@@ -27,9 +28,10 @@
                                 <tr class="<?php echo ($key % 2) ? "even $key" : "odd $key"; ?> gradeX">
                                     <td>
                                         <a href="<?php echo base_url() ?>index.php/AdminDashboard/viewApplication/<?php echo $value['user_id'] ?>/<?php echo (isset($status) && $status == 'existing') ? "1" : "0"; ?>">
-                                            <?php echo $value['student_id'] ?>
+                                            <?php echo $value['fullname'] ?>
                                         </a>
                                     </td>
+                                    <td><?php echo $value['student_id'] ?></td>
                                     <td><?php echo $value['cgpa'] ?></td>
                                     <td><?php echo $value['phone'] ?></td>
                                     <td><?php echo $value['amount'] ?></td>
