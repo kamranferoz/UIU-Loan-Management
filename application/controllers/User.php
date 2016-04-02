@@ -12,31 +12,19 @@ class User extends Base {
 
     public function index()
     {
-        if ($this->isLoggedIn()){
-            redirect('dashboard', 'refresh');
-        }
+        $this->redirectLoggedInUser();
         redirect('user/login', 'refresh');
     }
 
     public function login(){
-        if ($this->isLoggedIn()){
-            if ($this->getUserRole() == STUDENT_ROLE_TITLE) {
-                redirect('StudentDashboard', 'refresh');
-            } else if ($this->getUserRole() == ADMIN_ROLE_TITLE){
-                redirect('AdminDashboard', 'refresh');
-            }
-        }
+        $this->redirectLoggedInUser();
 
         $data = array(
             'hide_menu' => 'login'
         );
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             if ($this->UserModel->login()) {
-                if ($this->getUserRole() == STUDENT_ROLE_TITLE) {
-                    redirect('StudentDashboard', 'refresh');
-                } else if ($this->getUserRole() == ADMIN_ROLE_TITLE){
-                    redirect('AdminDashboard', 'refresh');
-                }
+                $this->redirectLoggedInUser();
             } else {
                 $data['error'] = 'Invalid Username or password.';
             }
@@ -55,9 +43,8 @@ class User extends Base {
     }
 
     public function applyForLoan(){
-        if ($this->isLoggedIn()){
-            redirect('dashboard', 'refresh');
-        }
+        $this->redirectLoggedInUser();
+
         $data = array(
             'hide_menu' => 'apply'
         );
@@ -71,16 +58,14 @@ class User extends Base {
     }
 
     public function forgotPassword(){
-        if ($this->isLoggedIn()){
-            redirect('dashboard', 'refresh');
-        }
+        $this->redirectLoggedInUser();
+
         $this->viewLoad('landing/forgot_password');
     }
 
     public function loanStatus(){
-        if ($this->isLoggedIn()){
-            redirect('dashboard', 'refresh');
-        }
+        $this->redirectLoggedInUser();
+
         $data = array(
             'hide_menu' => 'loan_status'
         );
@@ -98,12 +83,17 @@ class User extends Base {
     }
 
     public function faq(){
+        $this->redirectLoggedInUser();
+
         $data = array(
             'hide_menu' => 'faq'
         );
         $this->viewLoad('landing/faq', $data);
     }
+
     public function newLoanApplication(){
+        $this->redirectLoggedInUser();
+
         $data = array(
             'hide_menu' => 'applyFormSubmit'
         );
@@ -116,5 +106,23 @@ class User extends Base {
             $this->setSessionAttr("error", "$loanApplicationStatus");
             redirect('user/applyForLoan', 'refresh');
         }
+    }
+
+    public function updateProfile(){
+        $data = array();
+        $this->redirectPublicUser();
+
+        if (strtolower($this->input->method()) == 'post'){
+            if ( ($error = $this->UserModel->updateProfile($this->getUserId())) !== true ){
+                $data['error'] = $error;
+            } else {
+                $data['success'] = 'Your profile has been updated successfully.';
+            }
+        }
+
+        $data['userData'] = $this->UserModel->getUserData($this->getUserId());
+        $data['role'] = $this->getUserRole();
+
+        $this->viewLoad('common/userProfile', $data);
     }
 }

@@ -15,40 +15,40 @@ class Base extends CI_Controller {
     {
     }
 
-    public function isLoggedIn(){
+    protected function isLoggedIn(){
         return $this->getSessionAttr('login');
     }
 
-    function getSessionAttr($attr) {
+    protected function getSessionAttr($attr) {
         if ($this->session->userdata("$attr") ) {
             return $this->session->userdata("$attr");
         }
         return false;
     }
 
-    function setSessionAttr($attr, $value) {
+    protected function setSessionAttr($attr, $value) {
         return $this->session->set_userdata("$attr", $value);
     }
 
-    function unsetSessionAttr($attr) {
+    protected function unsetSessionAttr($attr) {
         return $this->session->unset_userdata("$attr");
     }
 
-    public function getUserRole(){
+    protected function getUserRole(){
         return $this->getSessionAttr('role');
     }
 
-    public function getUserId(){
+    protected function getUserId(){
         return $this->getSessionAttr('user_id');
     }
 
-    function debug($debugArray){
+    protected function debug($debugArray){
         echo "<pre>";
         print_r($debugArray);
         echo "</pre>";
     }
 
-    public function viewLoad($view, $data = null){
+    protected function viewLoad($view, $data = null){
         if (!isset($data['hide_menu'])){
             $data['hide_menu'] = '';
         }
@@ -61,24 +61,30 @@ class Base extends CI_Controller {
             $this->load->view("landing/landingLeftMenu", $data);
         } else {
             $this->load->view("common/menu", $data);
-            if ($data['user_role'] == STUDENT_ROLE_TITLE){
-
-            } else if ($data['user_role'] == ADMIN_ROLE_TITLE){
-            }
         }
 
         $this->load->view("$view", $data);
 
         if (!$this->isLoggedIn()){
             $this->load->view("landing/landingFooter", $data);
-        } else {
-            if ($data['user_role'] == STUDENT_ROLE_TITLE){
-
-            } else if ($data['user_role'] == ADMIN_ROLE_TITLE){
-
-            }
         }
 
         $this->load->view('common/footer');
+    }
+
+    protected function redirectLoggedInUser(){
+        if ($this->isLoggedIn()){
+            if ($this->getUserRole() == STUDENT_ROLE_TITLE) {
+                redirect('StudentDashboard', 'refresh');
+            } else if ($this->getUserRole() == ADMIN_ROLE_TITLE){
+                redirect('AdminDashboard', 'refresh');
+            }
+        }
+    }
+
+    protected function redirectPublicUser(){
+        if (!$this->isLoggedIn()){
+            redirect('user/login', 'refresh');
+        }
     }
 }

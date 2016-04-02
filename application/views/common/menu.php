@@ -22,7 +22,7 @@ require_once BASEPATH . "../application/libraries/utilities.php";
                     <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-user activeSquare">
-                    <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                    <li><a href="<?php echo base_url() ?>index.php/user/updateProfile"><i class="fa fa-user fa-fw"></i> User Profile</a>
                     </li>
                     <li class="divider"></li>
                     <li><a href="<?php echo base_url() ?>index.php/user/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>

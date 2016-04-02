@@ -14,7 +14,8 @@
                             <i class="fa fa-comments fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
-                            <div><h4>Total Loan: <?php echo $total_loan ?></h4></div>
+                            <div><h4>Total Requested Loan: <?php echo $total_requested_loan ?></h4></div>
+                            <div><h4>Total Approved Loan: <?php echo $total_approved_loan ?></h4></div>
                             <div><h4>Total Return: <?php echo $total_return ?></h4></div>
                             <div><h4>Total Remaining: <?php echo $remaining_loan ?></h4></div>
                         </div>

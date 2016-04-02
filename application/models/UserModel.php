@@ -215,4 +215,77 @@ class UserModel extends BaseModel
 
         return $data;
     }
+
+    function getUserData($userId) {
+        $data = array();
+        $this->db->select('p.firstname, p.lastname, users.email, p.phone');
+        $this->db->from("users");
+        $this->db->join("personal_info p", "p.user_id = users.id", "left");
+        $this->db->where('users.id', $userId);
+        $res = $this->db->get();
+
+        foreach ($res->result() as $row){
+            $data = array(
+                'firstname' => $row->firstname,
+                'lastname' => $row->lastname,
+                'email' => $row->email,
+                'phone' => $row->phone,
+            );
+
+            break;
+        }
+
+        return $data;
+    }
+
+    function updateProfile($userId){
+        $newPassword = $this->postGet('newPassword');
+        $confirmPassword = $this->postGet('confirmPassword');
+        $password = $this->postGet('currentPassword');
+        $passwordValid = false;
+
+        $this->db->where('id', $userId);
+        $this->db->where('password', md5($password));
+        $res = $this->db->get('users');
+
+        foreach ($res->result() as $user) {
+            $passwordValid = true;
+            break;
+        }
+
+        if ($passwordValid && $newPassword == $confirmPassword) {
+            $personalInfoData = array(
+                'firstname' => $this->postGet('fname'),
+                'lastName' => $this->postGet('lname'),
+                'phone' => $this->postGet('phone'),
+            );
+
+            $this->db->where('user_id', $userId);
+            $personalInfoUpdate = $this->db->update('personal_info', $personalInfoData);
+
+            if (!$personalInfoUpdate){
+                return "An error found. Please try again later!";
+            }
+
+            $usersData = array(
+                'email' => $this->postGet('email'),
+            );
+
+            if ($newPassword != '') {
+                $usersData['password'] = md5($newPassword);
+            }
+
+            $this->db->where('id', $userId);
+            $usersInfoUpdate = $this->db->update('users', $usersData);
+
+            if (!$usersInfoUpdate){
+                return "An error found. Please try again later!";
+            }
+
+        } else {
+            return (!$passwordValid) ? 'Invalid Current Password' : "New Password doesn't match.";
+        }
+
+        return true;
+    }
 }

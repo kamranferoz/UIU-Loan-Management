@@ -8,9 +8,7 @@ class AdminDashboard extends Base
     public function __construct()
     {
         parent::__construct();
-        if (!$this->isLoggedIn()){
-            redirect('user/login', 'refresh');
-        }
+        $this->redirectPublicUser();
         $this->load->model('AdminModel');
     }
 
@@ -30,6 +28,12 @@ class AdminDashboard extends Base
     public function newApplicant()
     {
         $newApplication = array();
+
+        if ($this->input->get_post('changeReadStatus') != null) {
+            $this->AdminModel->updateReadStatus();
+            $newApplication['success'] = "The application has been updated successfully.";
+        }
+
         $newApplication['application'] = $this->AdminModel->getApplications();
         $newApplication['menuTitle'] = 'New Loan Application';
         $newApplication['item'] = 0;
@@ -138,5 +142,12 @@ class AdminDashboard extends Base
             $this->setSessionAttr('error', 'Sorry! Internal Server Error. Please try again later');
             redirect("AdminDashboard/{$actionName[$status]}", 'refresh');
         }
+    }
+
+    public function printApplication(){
+        $application_user_id = $this->uri->segment(3, 0);
+        $data = array();
+
+        $this->load->view('print', $data);
     }
 }

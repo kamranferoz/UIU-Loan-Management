@@ -30,6 +30,7 @@ class AdminModel extends BaseModel
         foreach ($res->result() as $row) {
             $currentApplication = array(
                 'fullname' => $row->firstname . " " . $row->lastname,
+                'read' => $row->read,
                 'user_id' => $row->user_id,
                 'student_id' => $row->student_id,
                 'cgpa' => $row->student_cgpa,
@@ -43,7 +44,8 @@ class AdminModel extends BaseModel
                 'relation' => $row->relation,
                 'guarantor_contact_no' => $row->guarantor_contact_no,
                 'guarantor_address' => $row->guarantor_address,
-                'amount' => $row->amount,
+                'requested_amount' => $row->requested_amount,
+                'approved_amount' => $row->approved_amount,
                 'tenor' => $row->tenor,
                 'date_taken' => date("jS F, Y", $row->approved_date),
                 'created_time' => date("jS F, Y", $row->created_time),
@@ -108,10 +110,22 @@ class AdminModel extends BaseModel
 
             if ($data['status'] == EXISTING_LOAN) {
                 $data['approved_date'] = time();
+                $data['approved_amount'] = $this->postGet('approved_amount');
             }
 
             $this->db->where('user_id', $loan_application_user_id);
             $this->db->update('loan', $data);
+
+            if ($data['status'] == EXISTING_LOAN) {
+                $data = array(
+                    'loan_id' => $this->postGet('loan_id'),
+                    'amount' => $this->postGet('approved_amount'),
+                    'type' => LOAN_TO_STUDENT,
+                    'date' => time(),
+                );
+
+                $this->db->insert('transaction', $data);
+            }
         }
 
         return true;
@@ -144,6 +158,16 @@ class AdminModel extends BaseModel
         }
 
         fclose($fp);
+
+        return true;
+    }
+
+    function updateReadStatus() {
+        $userId = $this->getPost('id');
+        $read = $this->getPost('changeReadStatus');
+
+        $this->db->where('user_id', $userId);
+        $this->db->update('loan', array('read' => "$read"));
 
         return true;
     }

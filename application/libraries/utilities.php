@@ -9,8 +9,8 @@
 define('ADMIN_ROLE_TITLE', 'admin');
 define('STUDENT_ROLE_TITLE', 'student');
 
-define('LOAN_FOR_STUDENT', 'Debit');
-define('LOAN_PAYMENT_FOR_STUDENT', 'Credit');
+define('LOAN_TO_STUDENT', 'Debit');
+define('PAYMENT_FROM_STUDENT', 'Credit');
 
 define("NEW_LOAN","Sent to the Department");
 define("PROCESSING_LOAN","Loan is being reviewed by the authority");

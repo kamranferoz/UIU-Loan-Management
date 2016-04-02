@@ -76,9 +76,13 @@
                         <div class="table-responsive">
                             <table class="table">
                                 <tbody>
+                                <tr class="warning">
+                                    <td><strong>Requested Loan Amount:</strong></td>
+                                    <td><strong><?php echo $application_detail['details']['requested_amount']; ?></strong></td>
+                                </tr>
                                 <tr class="info">
-                                    <td><strong>Loan Amount:</strong></td>
-                                    <td><strong><?php echo $application_detail['details']['amount']; ?></strong></td>
+                                    <td><strong>Approved Loan Amount:</strong></td>
+                                    <td><strong><?php echo $application_detail['details']['approved_amount']; ?></strong></td>
                                 </tr>
                                 <tr class="warning">
                                     <td>Loan Tenor:</td>
@@ -206,7 +210,7 @@
                             <input type="hidden" name="loan_id" value="<?php echo $application_detail['details']['loan_id'] ?>"/>
                             <div class="form-group col-xs-6" style="padding-left: 0;">
                                 <label>Update Status</label>
-                                <select class="form-control" name="status">
+                                <select class="form-control" name="status" id="status" onchange="checkStatus();">
                                     <option value="Loan is being reviewed by the authority">Loan Processing.</option>
                                     <option value="Approved">Approved.</option>
                                     <option value="Paid in full">Loan was paid in full.</option>
@@ -215,13 +219,18 @@
                                 </select>
                             </div>
                             <div class="clearfix"></div>
+                            <div class="form-group col-xs-6" id="approvedLoanAmountDiv" style="display: none; padding-left: 0;">
+                                <label>Approved Amount</label>
+                                <input type="number" class="form-control" id="approved_amount" name="approved_amount" placeholder="Enter the approved loan amount.">
+                            </div>
+                            <div class="clearfix"></div>
                             <button type="submit" class="btn btn-warning">Update Status</button>
                         </form>
                         <form action="" method="post" id="addTransactionForm" style="display: none;">
                             <input type="hidden" name="action" value="addTransaction"/>
                             <input type="hidden" name="loan_id" value="<?php echo $application_detail['details']['loan_id'] ?>"/>
                             <div class="form-group">
-                                <label>Loan Amount</label>
+                                <label>Transaction Amount</label>
                                 <input type="number" class="form-control" name="amount" placeholder="Enter the transaction amount." required>
                             </div>
                             <div class="form-group col-xs-6" style="padding-left: 0;">
@@ -233,7 +242,7 @@
                                 <label>Transaction Type</label>
                                 <select class="form-control" name="type">
                                     <option value="Credit">Credit</option>
-                                    <option value="Debit">Debit</option>
+                                    <!--<option value="Debit">Debit</option>-->
                                 </select>
                             </div>
                             <div class="clearfix"></div>
@@ -250,6 +259,16 @@
 </div>
 
 <script type="text/javascript">
+    function checkStatus(){
+        if ($('#status').val() == 'Approved'){
+            $('#approvedLoanAmountDiv').slideDown();
+            $('#approved_amount').attr("required", "required");
+        } else {
+            $('#approvedLoanAmountDiv').slideUp();
+            $('#approved_amount').removeAttr("required");
+        }
+    }
+
     function statusUpdate(){
         $('#approval_date_error').slideUp();
         $('#initialMsg').slideUp();

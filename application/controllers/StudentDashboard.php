@@ -8,25 +8,28 @@ class StudentDashboard extends Base
     public function __construct()
     {
         parent::__construct();
-        if (!$this->isLoggedIn()){
-            redirect('user/login', 'refresh');
-        }
+        $this->redirectPublicUser();
         $this->load->model('StudentModel');
     }
 
     public function index()
     {
+        redirect('StudentDashboard/loanDetails', 'refresh');
+    }
+
+    public function loanDetails(){
         $transaction = $this->StudentModel->loadTransaction($this->getUserId());
         $distribution_date = date('F d, Y', $transaction[0]['distribution_date']);
         $cycle_due_date = date('dS', $transaction[0]['cycle_due_date']);
         $installment_amount = $transaction[0]['installment_amount'];
         $tenor = $transaction[0]['tenor'];
-        $total_loan = $transaction[0]['loanAmount'];
+        $total_requested_loan = $transaction[0]['requestedLoanAmount'];
+        $total_approved_loan = $transaction[0]['approvedLoanAmount'];
         $installment_system = $transaction[0]['installment_system'];
         $total_return = 0;
 
         foreach($transaction as $key => $value){
-            if ($value['type'] == LOAN_PAYMENT_FOR_STUDENT) {
+            if ($value['type'] == PAYMENT_FROM_STUDENT) {
                 $total_return += $value['tranAmount'];
                 $total_return += $value['adjustment'];
                 $transaction[$key]['class'] = 'success';
@@ -35,10 +38,11 @@ class StudentDashboard extends Base
             }
         }
 
-        $remaining_loan = $total_loan - $total_return;
+        $remaining_loan = $total_approved_loan - $total_return;
 
         $data = array(
-            'total_loan' => $total_loan,
+            'total_approved_loan' => $total_approved_loan,
+            'total_requested_loan' => $total_requested_loan,
             'total_return' => $total_return,
             'remaining_loan' => $remaining_loan,
 

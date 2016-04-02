@@ -20,7 +20,7 @@ class StudentModel extends BaseModel
     function loadTransaction($userId){
         $data = array();
         $this->db->select("
-            l.amount loanAmount, l.approved_date, l.distribution_date, l.installment_amount, l.cycle_due_date, l.tenor, l.installment_system,
+            l.requested_amount requestedLoanAmount, l.approved_amount approvedLoanAmount, l.approved_date, l.distribution_date, l.installment_amount, l.cycle_due_date, l.tenor, l.installment_system,
             t.amount tranAmount, t.type, t.date, t.adjustment
         ");
         $this->db->where('l.user_id', $userId);
