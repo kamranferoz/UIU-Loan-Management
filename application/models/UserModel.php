@@ -98,7 +98,12 @@ class UserModel extends BaseModel
             'student_cgpa' => $data['student_cgpa'] ,
             'present_address' => $data['students_present_address'],
             'permanent_address' => $data['students_permanent_address'],
-            'phone' => $data['student_phone']
+            'phone' => $data['student_phone'],
+            'completed_credits' => $data['completed_credits'],
+            'last_semester' => $data['last_semester'],
+            'taken_credits' => $data['taken_credits'],
+            'next_semester' => $data['next_semester'],
+            'previous_semester_gpa' => $data['previous_semester_gpa'],
         );
 
         $personal_info_created = $this->db->insert('personal_info', $personal_info_data);
@@ -113,7 +118,7 @@ class UserModel extends BaseModel
 
         $loan_data = array(
             'user_id' => $user_id,
-            'amount' => $data['loan_amount'] ,
+            'requested_amount' => $data['loan_amount'] ,
             'installment_amount' => ($data['loan_amount'] / $data['tenor']),
             'tenor' => $data['tenor'] ,
             'note' => $data['reason']
@@ -184,6 +189,7 @@ class UserModel extends BaseModel
         return true;
     }
 
+
     function getData(){
         $tenor = array(
             '4' => '4 Months',
@@ -212,10 +218,13 @@ class UserModel extends BaseModel
         $data['gphone'] = $this->postGet('gphone');
         $data['gaddress'] = $this->postGet('gaddress');
         $data['email'] = $this->postGet('email');
-
+        $data['completed_credits'] = $this->postGet('student_completed_credits');
+        $data['last_semester'] = $this->postGet('last_semester_name');
+        $data['taken_credits'] = $this->postGet('student_taken_credits');
+        $data['next_semester'] = $this->postGet('next_semester_name');
+        $data['previous_semester_gpa'] = $this->postGet('previous_semester_gpa');
         return $data;
     }
-
     function getUserData($userId) {
         $data = array();
         $this->db->select('p.firstname, p.lastname, users.email, p.phone');

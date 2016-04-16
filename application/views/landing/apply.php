@@ -47,6 +47,51 @@
                                     <input type="number"step="0.01"maxlength="4" required class="form-control" id="student_cgpa" name="student_cgpa" placeholder="Enter your CGPA">
                                 </div>
 
+                                <div class="form-group col-xs-10" id="student_completed_creditsDiv">
+                                    <label>Completed Credits <span class="required">*</span></label>
+                                    <input type="number" required class="form-control" id="student_completed_credits" name="student_completed_credits" placeholder="Enter your completed credits">
+                                </div>
+
+                                <div class="form-group col-xs-10">
+                                    <label>Last Trimester <span class="required">*</span></label>
+                                    <select class="form-control" id="last_semester_name" name="last_semester_name">
+                                        <?php
+                                            $semester = array('FALL ','SUMMER ','SPRING ');
+                                            $current_year = date('Y',time());
+
+                                        for($i = $current_year - 6; $i <= $current_year; $i++) { ?>
+                                        <option value="<?php echo $semester[0]."$i"?>"> <?php echo $semester[0]."$i"?> </option>
+                                        <option value="<?php echo $semester[1]."$i"?>"> <?php echo $semester[1]."$i"?> </option>
+                                        <option value="<?php echo $semester[2]."$i"?>"> <?php echo $semester[2]."$i"?> </option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-xs-10" id="student_taken_creditsDiv">
+                                    <label>How many credits taken for next Trimester <span class="required">*</span></label>
+                                    <input type="number" required class="form-control" id="student_taken_credits" name="student_taken_credits" placeholder="Taken Credits">
+                                </div>
+
+                                <div class="form-group col-xs-10">
+                                    <label>Next Trimester <span class="required">*</span></label>
+                                    <select class="form-control" id="next_semester_name" name="next_semester_name">
+                                        <?php
+                                        $semester = array('FALL ','SUMMER ','SPRING ');
+                                        $current_year = date('Y',time());
+
+                                        for($i = $current_year; $i <= $current_year + 1; $i++) { ?>
+                                            <option value="<?php echo $semester[0]."$i"?>"> <?php echo $semester[0]."$i"?> </option>
+                                            <option value="<?php echo $semester[1]."$i"?>"> <?php echo $semester[1]."$i"?> </option>
+                                            <option value="<?php echo $semester[2]."$i"?>"> <?php echo $semester[2]."$i"?> </option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-xs-10" id="student_previous_gpaDiv">
+                                    <label>Previous Trimester's GPA <span class="required">*</span></label>
+                                    <input type="number"step="0.01"maxlength="4" required class="form-control" id="previous_semester_gpa" name="previous_semester_gpa" placeholder="Enter your previous trimester's GPA">
+                                </div>
+
                                 <div class="form-group col-xs-10" id="emailDiv">
                                     <label>Email <span class="required">*</span></label>
                                     <input type="email" required class="form-control" id="email" name="email" placeholder="Enter your email">
@@ -186,7 +231,7 @@
 
 <script type="text/javascript">
     function checkValidationStepOne(element){
-        var fields = ['fname', 'lname', 'student_id', 'email', 'nid', 'students_present_address', 'students_permanent_address'], loop, errorFlag = false;
+        var fields = ['fname', 'lname', 'student_id', 'email', 'nid', 'students_present_address', 'students_permanent_address','student_completed_credits','student_taken_credits','previous_semester_gpa'], loop, errorFlag = false;
         for (loop = 0; loop < fields.length; loop++){
             if (!document.getElementById(fields[loop]).checkValidity()){
                 $('#' + fields[loop] + 'Div').addClass('has-error');

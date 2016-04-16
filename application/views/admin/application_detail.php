@@ -59,6 +59,19 @@
                                     <td>Student Permanent Address:</td>
                                     <td><?php echo $application_detail['details']['permanent_address']; ?></td>
                                 </tr>
+
+                                <tr class="success">
+                                    <td>Student's credits complete:</td>
+                                    <td><?php echo $application_detail['details']['completed_credits'] . ' Up to ' . $application_detail['details']['last_semester']; ?></td>
+                                </tr>
+                                <tr class="danger">
+                                    <td>Taken Credits for upcoming <?php echo $application_detail['details']['next_semester']; ?> semester:</td>
+                                    <td><?php echo $application_detail['details']['taken_credits']; ?></td>
+                                </tr>
+                                <tr class="success">
+                                    <td>Student's GPA of last Trimester:</td>
+                                    <td><?php echo $application_detail['details']['previous_semester_gpa'];?></td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -76,13 +89,17 @@
                         <div class="table-responsive">
                             <table class="table">
                                 <tbody>
-                                <tr class="warning">
+                                <tr class="info">
                                     <td><strong>Requested Loan Amount:</strong></td>
                                     <td><strong><?php echo $application_detail['details']['requested_amount']; ?></strong></td>
                                 </tr>
-                                <tr class="info">
+                                <tr class="warning">
                                     <td><strong>Approved Loan Amount:</strong></td>
                                     <td><strong><?php echo $application_detail['details']['approved_amount']; ?></strong></td>
+                                </tr>
+                                <tr class="info">
+                                    <td><strong>Remaining Loan Amount:</strong></td>
+                                    <td><strong><?php echo $application_detail['details']['remaining_loan']; ?></strong></td>
                                 </tr>
                                 <tr class="warning">
                                     <td>Loan Tenor:</td>

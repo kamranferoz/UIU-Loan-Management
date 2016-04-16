@@ -111,6 +111,7 @@ class AdminDashboard extends Base
         $data['application_detail'] = $this->AdminModel->getDetailsOfApplication($loan_application_user_id, $existing_loan);
         if (!isset($data['application_detail']['transactions'])) { $data['application_detail']['transactions'] = array(); }
 
+
         $this->viewLoad('admin/application_detail', $data);
     }
 
@@ -146,8 +147,9 @@ class AdminDashboard extends Base
 
     public function printApplication(){
         $application_user_id = $this->uri->segment(3, 0);
-        $data = array();
+        $data = $this->AdminModel->applicationFormView($application_user_id);
 
         $this->load->view('print', $data);
     }
+
 }

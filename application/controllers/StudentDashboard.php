@@ -17,6 +17,7 @@ class StudentDashboard extends Base
         redirect('StudentDashboard/loanDetails', 'refresh');
     }
 
+
     public function loanDetails(){
         $transaction = $this->StudentModel->loadTransaction($this->getUserId());
         $distribution_date = date('F d, Y', $transaction[0]['distribution_date']);

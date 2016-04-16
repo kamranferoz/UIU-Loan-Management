@@ -16,6 +16,21 @@ class AdminModel extends BaseModel
     {
         parent::__construct();
     }
+    function loadTransaction($userId){
+        $data = array();
+        $this->db->select("
+            l.requested_amount requestedLoanAmount, l.approved_amount approvedLoanAmount, l.approved_date, l.distribution_date, l.installment_amount, l.cycle_due_date, l.tenor, l.installment_system,
+            t.amount tranAmount, t.type, t.date, t.adjustment
+        ");
+        $this->db->where('l.user_id', $userId);
+        $this->db->join('transaction t', 't.loan_id = l.id', 'left');
+        $res = $this->db->get('loan l');
+
+        foreach ($res->result_array() as $transaction) {
+            $data[] = $transaction;
+        }
+        return $data;
+    }
 
     function getApplications($status = NEW_LOAN){
         $data = array();
@@ -36,6 +51,11 @@ class AdminModel extends BaseModel
                 'cgpa' => $row->student_cgpa,
                 'phone' => $row->phone,
                 'email' => $row->email,
+                'completed_credits' => $row->completed_credits,
+                'last_semester' => $row->last_semester,
+                'taken_credits' => $row->taken_credits,
+                'next_semester' => $row->next_semester,
+                'previous_semester_gpa' => $row->previous_semester_gpa,
                 'permanent_address'=> $row->permanent_address,
                 'present_address' => $row->present_address,
                 'note' => $row->note,
@@ -68,10 +88,12 @@ class AdminModel extends BaseModel
         $this->db->where("loan.user_id", $loan_application_user_id);
         $res = $this->db->get();
 
+
         foreach ($res->result_array() as $row){
             $data['details'] = $row;
             break;
         }
+        $remaining_loan=0;
 
         if ($existing_loan) {
             $this->db->select('t.amount, t.type, t.date, t.loan_id, t.adjustment, t.id');
@@ -83,7 +105,20 @@ class AdminModel extends BaseModel
             foreach ($res->result_array() as $row){
                 $data['transactions'][] = $row;
             }
+            $transaction = $this->loadTransaction($loan_application_user_id);
+            $total_return = 0;
+            $total_approved_loan = $transaction[0]['approvedLoanAmount'];
+            foreach($transaction as $key => $value){
+                if ($value['type'] == PAYMENT_FROM_STUDENT) {
+                    $total_return += $value['tranAmount'];
+                    $total_return += $value['adjustment'];
+                }
+            }
+
+            $remaining_loan = $total_approved_loan - $total_return;
+
         }
+        $data['details']['remaining_loan'] = $remaining_loan;
 
         return $data;
     }
@@ -143,7 +178,7 @@ class AdminModel extends BaseModel
         foreach ($data as $key => $value) {
             $list[] = array(
                 $value['fullname'], $value['student_id'], $value['cgpa'], $value['email'], $value['phone'], $value['present_address'],$value['permanent_address'],
-                $value['amount'], $value['tenor'], $value['note'], $value['status'],
+                $value['requested_amount'], $value['tenor'], $value['note'], $value['status'],
                 $value['guarantor_name'], $value['relation'], $value['guarantor_contact_no'], $value['guarantor_address'],
             );
         }
@@ -170,5 +205,53 @@ class AdminModel extends BaseModel
         $this->db->update('loan', array('read' => "$read"));
 
         return true;
+    }
+
+    function applicationFormView($application_user_id){
+
+        $data = array();
+        $this->db->select("*");
+        $this->db->from("personal_info");
+        $this->db->where('personal_info.user_id', $application_user_id);
+        $this->db->join("loan", "personal_info.user_id = loan.user_id", "left");
+        $this->db->join("users", "users.id = personal_info.user_id", "left");
+        $this->db->join("loan_guarantor g", "g.loan_id = loan.id", "left");
+        $res = $this->db->get('');
+
+
+        foreach ($res->result() as $row) {
+            $currentApplication = array(
+                'fullname' => $row->firstname . " " . $row->lastname,
+
+                'user_id' => $row->user_id,
+                'student_id' => $row->student_id,
+                'cgpa' => $row->student_cgpa,
+                'phone' => $row->phone,
+                'email' => $row->email,
+                'completed_credits' => $row->completed_credits,
+                'last_semester' => $row->last_semester,
+                'taken_credits' => $row->taken_credits,
+                'next_semester' => $row->next_semester,
+                'previous_semester_gpa' => $row->previous_semester_gpa,
+                'permanent_address'=> $row->permanent_address,
+                'present_address' => $row->present_address,
+                'note' => $row->note,
+                'status' => $row->status,
+                'guarantor_name' => $row->guarantor_name,
+                'relation' => $row->relation,
+                'guarantor_contact_no' => $row->guarantor_contact_no,
+                'guarantor_address' => $row->guarantor_address,
+                'requested_amount' => $row->requested_amount,
+                'approved_amount' => $row->approved_amount,
+                'tenor' => $row->tenor,
+                'date_taken' => date("jS F, Y", $row->approved_date),
+                'created_time' => date("jS F, Y", $row->created_time),
+            );
+            $data = $currentApplication;
+        }
+
+
+        return $data;
+
     }
 }
