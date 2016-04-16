@@ -20,6 +20,17 @@
 <script src="<?php echo base_url() ?>static/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
 <script src="<?php echo base_url() ?>static/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
 
+<?php if (isset($pageType) && $pageType == 'loanStat') { ?>
+    <!-- Flot Charts JavaScript -->
+    <script src="<?php echo base_url() ?>static/bower_components/flot/excanvas.min.js"></script>
+    <script src="<?php echo base_url() ?>static/bower_components/flot/jquery.flot.js"></script>
+    <script src="<?php echo base_url() ?>static/bower_components/flot/jquery.flot.pie.js"></script>
+    <script src="<?php echo base_url() ?>static/bower_components/flot/jquery.flot.resize.js"></script>
+    <script src="<?php echo base_url() ?>static/bower_components/flot/jquery.flot.time.js"></script>
+    <script src="<?php echo base_url() ?>static/bower_components/flot.tooltip/js/jquery.flot.tooltip.min.js"></script>
+    <script src="<?php echo base_url() ?>static/js/flot-data.js"></script>
+<?php } ?>
+
 <!-- Custom static JavaScript -->
 <script src="<?php echo base_url() ?>static/dist/js/sb-admin-2.js"></script>
 

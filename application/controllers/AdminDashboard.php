@@ -115,6 +115,10 @@ class AdminDashboard extends Base
         $this->viewLoad('admin/application_detail', $data);
     }
 
+    public function testEmail(){
+        $this->AdminModel->testEmail();
+    }
+
     public function download(){
         $item = $this->uri->segment(3, 0);
         global $exportItem;
@@ -150,6 +154,13 @@ class AdminDashboard extends Base
         $data = $this->AdminModel->applicationFormView($application_user_id);
 
         $this->load->view('print', $data);
+    }
+
+    public function loanStatistics(){
+        $data = $this->AdminModel->getLoanStat();
+        $data['pageType'] = 'loanStat';
+
+        $this->viewLoad('admin/loanStatistics', $data);
     }
 
 }

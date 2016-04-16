@@ -138,6 +138,8 @@ class AdminModel extends BaseModel
             );
 
             $this->db->insert('transaction', $data);
+
+            //TODO: Email to the student
         } else if ($action == 'statusUpdate') {
             $data = array(
                 'status' => $this->postGet('status'),
@@ -160,10 +162,53 @@ class AdminModel extends BaseModel
                 );
 
                 $this->db->insert('transaction', $data);
+
+                $this->db->select("email, username, p.firstname, p.lastname");
+                $this->db->join("personal_info p", "p.user_id = users.id", "left");
+                $this->db->where("users.id", $loan_application_user_id);
+                $res = $this->db->get("users");
+                $emailData = array('password' => $this->randomPassword());
+                $to = 0;
+
+                foreach ($res->result() as $key => $value) {
+                    $emailData['name'] = $value->firstname . " " . $value->lastname;
+                    $emailData['username'] = $value->username;
+                    $to = $value->email;
+                    break;
+                }
+
+                $this->sendEmail($to, 'Congratulation! Your UIU Study Loan has been approved.',
+                    "emailTemplate/loanApproved.php", $emailData);
             }
         }
 
         return true;
+    }
+
+    function randomPassword($digit = 6){
+        //Todo: Random algo implement
+        return "aBcXy9";
+    }
+
+    function testEmail(){
+        $this->db->select("email, username, p.firstname, p.lastname");
+        $this->db->join("personal_info p", "p.user_id = users.id", "left");
+        $this->db->where("users.id", 19);
+        $res = $this->db->get("users");
+        $emailData = array('password' => $this->randomPassword());
+        $to = 0;
+
+        foreach ($res->result() as $key => $value) {
+            $emailData['name'] = $value->firstname . " " . $value->lastname;
+            $emailData['username'] = $value->username;
+            $to = $value->email;
+            break;
+        }
+
+        $this->sendEmail($to, 'Congratulation! Your UIU Study Loan has been approved.',
+            "emailTemplate/loanApproved.php", $emailData);
+
+        var_dump($this->email->print_debugger());
     }
 
     function writeCSV($data){
@@ -252,6 +297,10 @@ class AdminModel extends BaseModel
 
 
         return $data;
+
+    }
+
+    public function getLoanStat(){
 
     }
 }

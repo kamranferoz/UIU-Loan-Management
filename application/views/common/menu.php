@@ -58,9 +58,9 @@ require_once BASEPATH . "../application/libraries/utilities.php";
                     <li>
                         <a href="<?php echo base_url() ?>index.php/AdminDashboard/loanRefunded"><i class="fa fa-child fa-fw"></i> Refunded Loan Queue</a>
                     </li>
-                    <li>
-                        <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> UIU Loan Statistics</a>
-                    </li>
+                    <!--<li>
+                        <a href="<?php /*echo base_url() */?>index.php/AdminDashboard/loanStatistics"><i class="fa fa-bar-chart-o fa-fw"></i> UIU Loan Statistics</a>
+                    </li>-->
                 </ul>
             </div>
             <!-- /.sidebar-collapse -->
