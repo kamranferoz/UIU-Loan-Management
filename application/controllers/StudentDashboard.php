@@ -20,12 +20,12 @@ class StudentDashboard extends Base
 
     public function loanDetails(){
         $transaction = $this->StudentModel->loadTransaction($this->getUserId());
-        $distribution_date = date('F d, Y', $transaction[0]['distribution_date']);
+        $distribution_date = date('F d, Y', $transaction[0]['approved_date']);
         $cycle_due_date = date('dS', $transaction[0]['cycle_due_date']);
-        $installment_amount = $transaction[0]['installment_amount'];
         $tenor = $transaction[0]['tenor'];
         $total_requested_loan = $transaction[0]['requestedLoanAmount'];
         $total_approved_loan = $transaction[0]['approvedLoanAmount'];
+        $installment_amount = ( $transaction[0]['approvedLoanAmount'] / $transaction[0]['tenor'] );
         $installment_system = $transaction[0]['installment_system'];
         $total_return = 0;
 

@@ -59,8 +59,17 @@ class User extends Base {
 
     public function forgotPassword(){
         $this->redirectLoggedInUser();
+        $data = array();
 
-        $this->viewLoad('landing/forgot_password');
+        if (strtolower($this->input->method()) == 'post'){
+            if ($this->UserModel->forgetPassword()){
+                $data['success'] = 'An email has been sent to your email address. Please follow the instruction in your email to gain access to your account again.';
+            } else {
+                $data['error'] = 'There is no account matching with that email. Please enter correct email.';
+            }
+        }
+
+        $this->viewLoad('landing/forgot_password', $data);
     }
 
     public function loanStatus(){

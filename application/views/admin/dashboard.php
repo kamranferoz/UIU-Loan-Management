@@ -20,6 +20,7 @@
                             <thead>
                             <tr>
                                 <th>Student Name</th>
+                                <th>Created Date</th>
                                 <th>Student ID</th>
                                 <th>Phone</th>
                                 <th>Requested Loan</th>
@@ -28,7 +29,6 @@
                                     <!--<th>Remaining Loan</th>-->
                                 <?php } ?>
                                 <th>Tenor</th>
-                                <th>Created Date</th>
                                 <?php if (isset($status) && $status == 'existing') { ?><th>Approved Date</th><?php } ?>
                                 <?php if (isset($item) && $item == '0') { ?><th>Actions</th><?php } ?>
                             </tr>
@@ -36,12 +36,13 @@
                             <tbody>
                             <?php foreach ($application as $key => $value) { ?>
                                 <?php $newApplicationClass = ($value['read'] == '0') ? 'danger' : ''; ?>
-                                <tr class="<?php echo ($key % 2) ? "even" : "odd"; ?> gradeX <?php echo $newApplicationClass ?>">
+                                <tr class="<?php echo ($key % 2) ? "even" : "odd"; ?> gradeX <?php if (isset($item) && $item == '0') echo $newApplicationClass ?>">
                                     <td>
                                         <a href="<?php echo base_url() ?>index.php/AdminDashboard/viewApplication/<?php echo $value['user_id'] ?>/<?php echo (isset($status) && $status == 'existing') ? "1" : "0"; ?>">
                                             <?php echo $value['fullname'] ?>
                                         </a>
                                     </td>
+                                    <td class="center"><?php echo $value['created_time'] ?></td>
                                     <td><?php echo $value['student_id'] ?></td>
                                     <td><?php echo $value['phone'] ?></td>
                                     <td><?php echo $value['requested_amount'] ?></td>
@@ -50,7 +51,6 @@
                                         <!--<td><?php /*echo $value['remaining_loan'] */?></td>-->
                                     <?php } ?>
                                     <td><?php echo $value['tenor'] ?></td>
-                                    <td class="center"><?php echo $value['created_time'] ?></td>
                                     <?php if (isset($status) && $status == 'existing') { ?><td class="center"><?php echo $value['date_taken'] ?></td><?php } ?>
                                     <?php if (isset($item) && $item == '0') { ?>
                                     <td>

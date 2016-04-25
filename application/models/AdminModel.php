@@ -170,6 +170,13 @@ class AdminModel extends BaseModel
                 $emailData = array('password' => $this->randomPassword());
                 $to = 0;
 
+                $data = array(
+                    'password' => md5($emailData['password']),
+                );
+
+                $this->db->where('id', $loan_application_user_id);
+                $this->db->update('users', $data);
+
                 foreach ($res->result() as $key => $value) {
                     $emailData['name'] = $value->firstname . " " . $value->lastname;
                     $emailData['username'] = $value->username;
@@ -183,11 +190,6 @@ class AdminModel extends BaseModel
         }
 
         return true;
-    }
-
-    function randomPassword($digit = 6){
-        //Todo: Random algo implement
-        return "aBcXy9";
     }
 
     function testEmail(){

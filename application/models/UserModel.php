@@ -119,7 +119,6 @@ class UserModel extends BaseModel
         $loan_data = array(
             'user_id' => $user_id,
             'requested_amount' => $data['loan_amount'] ,
-            'installment_amount' => ($data['loan_amount'] / $data['tenor']),
             'tenor' => $data['tenor'] ,
             'note' => $data['reason']
         );
@@ -296,5 +295,43 @@ class UserModel extends BaseModel
         }
 
         return true;
+    }
+
+    function forgetPassword(){
+        $email = $this->postGet('email');
+        $userId = '';
+        $emailData = array();
+
+        $this->db->select("users.id, username, p.firstname, p.lastname");
+        $this->db->join("personal_info p", "p.user_id = users.id", "left");
+        $this->db->where('users.email', $email);
+        $res = $this->db->get('users');
+
+        foreach ($res->result() as $user) {
+            $userId = $user->id;
+            $emailData['name'] = $user->firstname . " " . $user->lastname;
+            $emailData['username'] = $user->username;
+            break;
+        }
+
+        if ($userId == '') {
+            return false;
+        }
+
+        $newPassword = $this->randomPassword();
+        $usersData['password'] = md5($newPassword);
+        $emailData['password'] = $newPassword;
+
+        $this->db->where('id', $userId);
+        $usersInfoUpdate = $this->db->update('users', $usersData);
+
+        if ($usersInfoUpdate){
+            $this->sendEmail($email, 'UIU Mock Application',
+                    "emailTemplate/loanApproved.php", $emailData);
+            return true;
+        } else {
+            return 'An error occured. Please try again later.';
+        }
+
     }
 }
