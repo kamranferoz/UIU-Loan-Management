@@ -138,7 +138,6 @@ class AdminModel extends BaseModel
             );
 
             $this->db->insert('transaction', $data);
-
             //TODO: Email to the student
         } else if ($action == 'statusUpdate') {
             $data = array(
@@ -184,6 +183,11 @@ class AdminModel extends BaseModel
                     break;
                 }
 
+                $tenor = $this->postGet('tenor');
+                $this->db->where('user_id', $loan_application_user_id);
+                $this->db->update('loan', array('tenor' => $tenor));
+                $emailData['tenor'] = $tenor;
+
                 $this->sendEmail($to, 'Congratulation! Your UIU Study Loan has been approved.',
                     "emailTemplate/loanApproved.php", $emailData);
             }
@@ -218,14 +222,14 @@ class AdminModel extends BaseModel
 
         $list = array(
             0 => array('Student Name', 'Student ID', 'CGPA', 'Email', 'Phone', 'Present Address', 'Permanent Address',
-            'Loan Amount', 'Loan Tenor', 'Loan Reason', 'Loan Status',
+            'Approved amount', 'Loan Tenor', 'Loan Reason', 'Loan Status',
             'Loan Guarantor Name', 'Loan Guarantor Relation', 'Loan Guarantor Contact No.', 'Loan Guarantor Address')
         );
 
         foreach ($data as $key => $value) {
             $list[] = array(
                 $value['fullname'], $value['student_id'], $value['cgpa'], $value['email'], $value['phone'], $value['present_address'],$value['permanent_address'],
-                $value['requested_amount'], $value['tenor'], $value['note'], $value['status'],
+                $value['approved_amount'], $value['tenor'], $value['note'], $value['status'],
                 $value['guarantor_name'], $value['relation'], $value['guarantor_contact_no'], $value['guarantor_address'],
             );
         }

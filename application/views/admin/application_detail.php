@@ -121,10 +121,10 @@
                                     <td>Loan Approval Date:</td>
                                     <td><?php echo isset($application_detail['details']['approved_date']) ? date("jS F, Y", $application_detail['details']['approved_date']) : "Not Approved Yet."; ?></td>
                                 </tr>
-                                <tr class="info">
+                                <!--<tr class="info">
                                     <td>Loan Distribution Date:</td>
-                                    <td><?php echo isset($application_detail['details']['distribution_date']) ? date("jS F, Y", $application_detail['details']['distribution_date']) : "Not Distributed Yet."; ?></td>
-                                </tr>
+                                    <td><?php /*echo isset($application_detail['details']['distribution_date']) ? date("jS F, Y", $application_detail['details']['distribution_date']) : "Not Distributed Yet."; */?></td>
+                                </tr>-->
                                 <tr class="warning">
                                     <td>Loan Status:</td>
                                     <td><?php echo $application_detail['details']['status']; ?></td>
@@ -239,7 +239,22 @@
                             <div class="form-group col-xs-6" id="approvedLoanAmountDiv" style="display: none; padding-left: 0;">
                                 <label>Approved Amount</label>
                                 <input type="number" class="form-control" id="approved_amount" name="approved_amount" placeholder="Enter the approved loan amount.">
+
+                                <div class="clearfix"></div>
+                                <div class="form-group"  style="padding-left: 0;margin-top: 10px">
+                                    <label>Tenor</label>
+                                    <!--<select class="form-control" id="tenor" name="tenor">
+                                        <option value="4">Within 4 months</option>
+                                        <option value="6">Within 6 months</option>
+                                        <option value="12">Within 1 year</option>
+                                    </select>-->
+                                    <input type="text" class="form-control" id="tenor" name="tenor" placeholder="Enter the deadline.">
+
+                                </div>
                             </div>
+
+
+
                             <div class="clearfix"></div>
                             <button type="submit" class="btn btn-warning">Update Status</button>
                         </form>
@@ -305,7 +320,8 @@
         }
     }
 
-    $( "#datepicker" ).datepick({dateFormat: 'dd-mm-yyyy', maxDate: +0,
-        minDate: <?php echo (!isset($application_detail['details']['approved_date'])) ? "-0" : ceil(-1 * ( (time() - $application_detail['details']['approved_date']) / (24*60*60) ) ); ?>
+    $( "#tenor" ).datepick({
+        dateFormat: 'dd-mm-yyyy',
+        minDate: 0
     });
 </script>

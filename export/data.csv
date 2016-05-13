@@ -1,11 +1,2 @@
-"Student Name","Student ID",CGPA,Email,Phone,"Present Address","Permanent Address","Loan Amount","Loan Tenor","Loan Reason","Loan Status","Loan Guarantor Name","Loan Guarantor Relation","Loan Guarantor Contact No.","Loan Guarantor Address"
-"Ishteaque Alam",011000003,3.73,ishteaque.alam@gmail.com,01xxxxxxxx3,"Address 3","Permanent address 3",50000,4,"For personal business.","Sent to the Department","Arbab's guardian",father,02xxxxxxxx1,"Guardian's Present Address 1"
-"Fuad Ahmed Robi",011000004,3.8,fuad.robi@gmail.com,01xxxxxxxx4,"Address 4",Mohammadpur,100000,6,"for starting business.","Sent to the Department","Alam's guardian",mother,02xxxxxxxx2,"Guardian's present address 2"
-"Sujon Ahmed",011000005,2.6,ami.sujon@mail.com,01xxxxxxxx5,Dhanmondi,Dhanmondi,10000000,12,"For buying a BMW Z8 car.","Sent to the Department","Ishteaque's guardian",father,02xxxxxxxx3,"Guardian present address 3"
-"Zahirul Islam",011000007,3.6,zahirulislam@mail.com,01xxxxxxxx7,"japan Garden City",Barishal,50000,4,"For Semester Fee.","Sent to the Department","Sujon's Guardian",father,02xxxxxxxx5,"Guardian's Present Address 5"
-"Tutul ahmed",011000008,2.9,tutul.a@mail.com,01xxxxxxxxxxxxxxxx8,arambag,jessor,60000,6,"For semester fee.","Sent to the Department","karim's guardian",sister,019100000000,kustia
-"Habibur Rahman Shabu",.011000010,3.8,shaburemail@mail.com,01aaaaaaaaaa10,Dhanmondi,"Student's Permanent Address",40000,6,"For buying project instrument.","Sent to the Department","zahirul's guardian",father,02xxxxxxxx7,Barishal
-"Mohammad ali",011000011,3.88,ali44@gmail.com,0110000000,"255 MK road Dhaka","55, mk road jessore",80000,12,"for startup a business.","Sent to the Department","Tutul's guardian",father,02xxxxxxxxxxxxxxxx8,gazipur
-"Mohammad Anwer",011000012,2.33,anwer22@gmail.com,0110000256,"55 Mohammadpur, Dhaka","23 jhonsonstreet New york",100100,6,"For medical aid","Sent to the Department","Shabu's guardian",father,011000000,"255, Dhanmodi Dhaka-1205"
-"Shomrat Ahmed",01ssssssssssss1,2.5,Shomrat@mail.com,01xxxxxxxxxx13,"Green Road",jamalpur,20000,6,"Apartment rent","Sent to the Department","ali's guardian",father,012222222,"55 mk road jessore"
-"Mohammad Faisal Ahmed",1234567890111,4,faisal@gmail.com,82937892374,Dhaka,Bhola,500000,"4 Months","Going to other university to study","Sent to the Department",None,father,54654564,"Buki Juki"
+"Student Name","Student ID",CGPA,Email,Phone,"Present Address","Permanent Address","Approved amount","Loan Tenor","Loan Reason","Loan Status","Loan Guarantor Name","Loan Guarantor Relation","Loan Guarantor Contact No.","Loan Guarantor Address"
+"Abdul Ali",011123000,3.5,fuad_robi@yahoo.com,0191121212121,Mohammadpur,Dhaka,12,19-05-2016,"Medical purpose",Approved,"ali's guardian",father,018121212121,dhanmondi

@@ -210,7 +210,9 @@ class UserModel extends BaseModel
         $data['students_present_address'] = $this->postGet('students_present_address');
         $data['students_permanent_address'] = $this->postGet('students_permanent_address');
         $data['loan_amount'] = $this->postGet('loan_amount');
-        $data['tenor'] = $tenor[$this->postGet('tenor')];
+
+        $data['tenor'] = $this->postGet('tenor');
+
         $data['reason'] = $this->postGet('reason');
         $data['gname'] = $this->postGet('gname');
         $data['relation'] = $this->postGet('relation');

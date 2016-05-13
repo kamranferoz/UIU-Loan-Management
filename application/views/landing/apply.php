@@ -143,7 +143,7 @@
                                     <label for="loan_amount">Amount <span class="required">*</span></label>
                                     <input type="number" required class="form-control" id="loan_amount" name="loan_amount" placeholder="Enter your loan ammount">
                                 </div>
-                                <div class="form-group col-xs-10">
+                                <!--<div class="form-group col-xs-10">
                                     <label>Tenor</label>
                                     <select class="form-control" id="tenor" name="tenor">
                                         <option value="4">Within 4 months</option>
@@ -153,7 +153,7 @@
                                         <option value="36">Within 3 years</option>
                                         <option value="48">Within 4 years</option>
                                     </select>
-                                </div>
+                                </div>-->
 
                                 <div class="form-group col-xs-10" id="reasonDiv">
                                     <label for="reason">Reason <span class="required">*</span></label>

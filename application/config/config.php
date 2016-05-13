@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://52.36.11.106/uiu_loan_management/';
+$config['base_url'] = 'http://localhost/uiu_loan_management/';
 
 /*
 |--------------------------------------------------------------------------
