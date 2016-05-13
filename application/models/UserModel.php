@@ -45,6 +45,7 @@ class UserModel extends BaseModel
         $this->db->from('loan');
         $this->db->join("personal_info p", "p.user_id = loan.user_id", "left");
         $this->db->where('p.student_id', $student_id);
+        $this->db->order_by("loan.id", "desc");
         $res = $this->db->get();
 
         foreach ($res->result() as $key => $value){
@@ -55,12 +56,6 @@ class UserModel extends BaseModel
     }
 
     function newLoanApplication(){
-        /*
-         *  TODO:
-            Email to the admin
-            Email to the applicant with the information (unique loan id)
-        */
-
         $genericErrorMessage = "An error found. Please try again later!";
 
         $data = $this->getData();
@@ -119,7 +114,6 @@ class UserModel extends BaseModel
         $loan_data = array(
             'user_id' => $user_id,
             'requested_amount' => $data['loan_amount'] ,
-            'tenor' => $data['tenor'] ,
             'note' => $data['reason']
         );
 
@@ -164,7 +158,7 @@ class UserModel extends BaseModel
         $required = array(
             'student_id', 'fname', 'lname', 'student_id', 'student_cgpa',
             'student_phone', 'students_present_address', 'loan_amount',
-            'tenor', 'reason', 'gname', 'relation', 'gphone', 'gaddress',
+            'reason', 'gname', 'relation', 'gphone', 'gaddress',
         );
 
         foreach ($required as $key => $value) {
@@ -190,15 +184,6 @@ class UserModel extends BaseModel
 
 
     function getData(){
-        $tenor = array(
-            '4' => '4 Months',
-            '6' => '6 Months',
-            '12' => '1 Year',
-            '24' => '2 Years',
-            '36' => '3 Years',
-            '48' => '4 Years',
-        );
-
         $data = array();
 
         $data['fname'] = $this->postGet('fname');
@@ -210,8 +195,6 @@ class UserModel extends BaseModel
         $data['students_present_address'] = $this->postGet('students_present_address');
         $data['students_permanent_address'] = $this->postGet('students_permanent_address');
         $data['loan_amount'] = $this->postGet('loan_amount');
-
-        $data['tenor'] = $this->postGet('tenor');
 
         $data['reason'] = $this->postGet('reason');
         $data['gname'] = $this->postGet('gname');
@@ -328,7 +311,7 @@ class UserModel extends BaseModel
         $usersInfoUpdate = $this->db->update('users', $usersData);
 
         if ($usersInfoUpdate){
-            $this->sendEmail($email, 'UIU Mock Application',
+            $this->sendEmail($email, 'UIU Loan Management',
                     "emailTemplate/loanApproved.php", $emailData);
             return true;
         } else {

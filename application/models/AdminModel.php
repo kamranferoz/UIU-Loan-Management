@@ -48,6 +48,7 @@ class AdminModel extends BaseModel
                 'read' => $row->read,
                 'user_id' => $row->user_id,
                 'student_id' => $row->student_id,
+                'remaining_amount' => $row->remaining_amount,
                 'cgpa' => $row->student_cgpa,
                 'phone' => $row->phone,
                 'email' => $row->email,
@@ -69,6 +70,7 @@ class AdminModel extends BaseModel
                 'tenor' => $row->tenor,
                 'date_taken' => date("jS F, Y", $row->approved_date),
                 'created_time' => date("jS F, Y", $row->created_time),
+                'created_date_timestamp' => $row->created_time,
             );
             $data[] = $currentApplication;
         }
@@ -93,7 +95,7 @@ class AdminModel extends BaseModel
             $data['details'] = $row;
             break;
         }
-        $remaining_loan=0;
+        //$remaining_loan=0;
 
         if ($existing_loan) {
             $this->db->select('t.amount, t.type, t.date, t.loan_id, t.adjustment, t.id');
@@ -105,7 +107,7 @@ class AdminModel extends BaseModel
             foreach ($res->result_array() as $row){
                 $data['transactions'][] = $row;
             }
-            $transaction = $this->loadTransaction($loan_application_user_id);
+            /*$transaction = $this->loadTransaction($loan_application_user_id);
             $total_return = 0;
             $total_approved_loan = $transaction[0]['approvedLoanAmount'];
             foreach($transaction as $key => $value){
@@ -115,30 +117,35 @@ class AdminModel extends BaseModel
                 }
             }
 
-            $remaining_loan = $total_approved_loan - $total_return;
+            $remaining_loan = $total_approved_loan - $total_return;*/
 
         }
-        $data['details']['remaining_loan'] = $remaining_loan;
+        //$data['details']['remaining_loan'] = $remaining_loan;
 
         return $data;
     }
 
     function updateApplication($loan_application_user_id){
-        /*
-         * TODO: Email to the applicant when necessary with password
-         *
-         * */
         $action = $this->postGet('action');
-        if ($action == 'addTransaction') {
+        if ($action == 'updateTenor') {
+            $data = array(
+                'tenor' => $this->postGet('updateTenor') . " (New Increased Deadline)",
+            );
+
+            $this->db->where("id", $this->postGet('loan_id'));
+            $this->db->update('loan', $data);
+        } else if ($action == 'addTransaction') {
             $data = array(
                 'loan_id' => $this->postGet('loan_id'),
                 'amount' => $this->postGet('amount'),
-                'type' => $this->postGet('type'),
+                'type' => PAYMENT_FROM_STUDENT,
                 'date' => strtotime($this->postGet('date')),
             );
 
             $this->db->insert('transaction', $data);
-            //TODO: Email to the student
+
+            $query = "UPDATE loan SET remaining_amount = (remaining_amount - " . $this->postGet('amount') . ") WHERE id = " . $this->postGet('loan_id') . ";";
+            $query_res = $this->db->query($query);
         } else if ($action == 'statusUpdate') {
             $data = array(
                 'status' => $this->postGet('status'),
@@ -147,12 +154,15 @@ class AdminModel extends BaseModel
             if ($data['status'] == EXISTING_LOAN) {
                 $data['approved_date'] = time();
                 $data['approved_amount'] = $this->postGet('approved_amount');
+                $data['remaining_amount'] = $this->postGet('approved_amount');
+                $data['tenor'] = $this->postGet('tenor');
             }
 
             $this->db->where('user_id', $loan_application_user_id);
             $this->db->update('loan', $data);
 
             if ($data['status'] == EXISTING_LOAN) {
+                /* Adding the New Transaction Start */
                 $data = array(
                     'loan_id' => $this->postGet('loan_id'),
                     'amount' => $this->postGet('approved_amount'),
@@ -161,20 +171,25 @@ class AdminModel extends BaseModel
                 );
 
                 $this->db->insert('transaction', $data);
+                /* Adding the New Transaction End */
 
-                $this->db->select("email, username, p.firstname, p.lastname");
-                $this->db->join("personal_info p", "p.user_id = users.id", "left");
-                $this->db->where("users.id", $loan_application_user_id);
-                $res = $this->db->get("users");
                 $emailData = array('password' => $this->randomPassword());
-                $to = 0;
 
+                /* Setting Users New Password Start */
                 $data = array(
                     'password' => md5($emailData['password']),
                 );
 
                 $this->db->where('id', $loan_application_user_id);
                 $this->db->update('users', $data);
+                /* Setting Users New Password End */
+
+                /* Getting information of User Start */
+                $this->db->select("email, username, p.firstname, p.lastname");
+                $this->db->join("personal_info p", "p.user_id = users.id", "left");
+                $this->db->where("users.id", $loan_application_user_id);
+                $res = $this->db->get("users");
+                $to = 0;
 
                 foreach ($res->result() as $key => $value) {
                     $emailData['name'] = $value->firstname . " " . $value->lastname;
@@ -182,11 +197,9 @@ class AdminModel extends BaseModel
                     $to = $value->email;
                     break;
                 }
+                /* Getting information of User Start */
 
-                $tenor = $this->postGet('tenor');
-                $this->db->where('user_id', $loan_application_user_id);
-                $this->db->update('loan', array('tenor' => $tenor));
-                $emailData['tenor'] = $tenor;
+                $emailData['tenor'] = $this->postGet('tenor');
 
                 $this->sendEmail($to, 'Congratulation! Your UIU Study Loan has been approved.',
                     "emailTemplate/loanApproved.php", $emailData);
@@ -196,41 +209,16 @@ class AdminModel extends BaseModel
         return true;
     }
 
-    function testEmail(){
-        $this->db->select("email, username, p.firstname, p.lastname");
-        $this->db->join("personal_info p", "p.user_id = users.id", "left");
-        $this->db->where("users.id", 19);
-        $res = $this->db->get("users");
-        $emailData = array('password' => $this->randomPassword());
-        $to = 0;
-
-        foreach ($res->result() as $key => $value) {
-            $emailData['name'] = $value->firstname . " " . $value->lastname;
-            $emailData['username'] = $value->username;
-            $to = $value->email;
-            break;
-        }
-
-        $this->sendEmail($to, 'Congratulation! Your UIU Study Loan has been approved.',
-            "emailTemplate/loanApproved.php", $emailData);
-
-        var_dump($this->email->print_debugger());
-    }
-
     function writeCSV($data){
         $fileName = FCPATH . "export/data.csv";;
 
         $list = array(
-            0 => array('Student Name', 'Student ID', 'CGPA', 'Email', 'Phone', 'Present Address', 'Permanent Address',
-            'Approved amount', 'Loan Tenor', 'Loan Reason', 'Loan Status',
-            'Loan Guarantor Name', 'Loan Guarantor Relation', 'Loan Guarantor Contact No.', 'Loan Guarantor Address')
+            0 => array('Student Name', 'Student ID', 'Phone', 'Approved Amount', 'Remaining Amount', 'Loan Tenor')
         );
 
         foreach ($data as $key => $value) {
             $list[] = array(
-                $value['fullname'], $value['student_id'], $value['cgpa'], $value['email'], $value['phone'], $value['present_address'],$value['permanent_address'],
-                $value['approved_amount'], $value['tenor'], $value['note'], $value['status'],
-                $value['guarantor_name'], $value['relation'], $value['guarantor_contact_no'], $value['guarantor_address'],
+                $value['fullname'], $value['student_id'], $value['phone'], $value['approved_amount'], $value['remaining_amount'], $value['tenor'],
             );
         }
 
@@ -273,7 +261,6 @@ class AdminModel extends BaseModel
         foreach ($res->result() as $row) {
             $currentApplication = array(
                 'fullname' => $row->firstname . " " . $row->lastname,
-
                 'user_id' => $row->user_id,
                 'student_id' => $row->student_id,
                 'cgpa' => $row->student_cgpa,

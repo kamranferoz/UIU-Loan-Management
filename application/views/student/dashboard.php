@@ -16,8 +16,6 @@
                         <div class="col-xs-9 text-right">
                             <div><h4>Total Requested Loan: <?php echo $total_requested_loan ?></h4></div>
                             <div><h4>Total Approved Loan: <?php echo $total_approved_loan ?></h4></div>
-                            <div><h4>Total Return: <?php echo $total_return ?></h4></div>
-                            <div><h4>Total Remaining: <?php echo $remaining_loan ?></h4></div>
                         </div>
                     </div>
                 </div>
@@ -31,8 +29,7 @@
                             <i class="fa fa-tasks fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
-                            <div><h4>Tenor: <?php echo $tenor ?></h4></div>
-                            <div><h4>Loan Taken: <?php echo $distribution_date ?></h4></div>
+                            <div><h4>Loan Approved Date: <?php echo $approve_date ?></h4></div>
                         </div>
                     </div>
                 </div>
@@ -46,9 +43,8 @@
                             <i class="fa fa-shopping-cart fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
-                            <div><h4>Installment Policy: <?php echo $installment_system ?></h4></div>
-                            <div><h4>Installment Due Date: <?php echo $cycle_due_date ?></h4></div>
-                            <div><h4>Installment Amount: <?php echo $installment_amount ?></h4></div>
+                            <div><h4>Final Deadline: <?php echo $tenor ?></h4></div>
+                            <div><h4>Total Loan Remaining: <?php echo $remaining_loan ?></h4></div>
                         </div>
                     </div>
                 </div>
@@ -70,16 +66,14 @@
                                 <th>Transaction Date</th>
                                 <th>Transaction Type</th>
                                 <th>Transaction Amount</th>
-                                <th>Transaction Adjustment</th>
                             </tr>
                             </thead>
                             <tbody>
                             <?php foreach ($transaction as $key => $value){ ?>
-                                <tr class="<?php echo $value['class'] ?>">
+                                <tr class="<?php echo ($key % 2) ? "odd" : "even"; ?>">
                                     <td><?php echo date('F d, Y', $value['date']) ?></td>
                                     <td><?php echo $value['type'] ?></td>
                                     <td><?php echo $value['tranAmount'] ?></td>
-                                    <td><?php echo $value['adjustment'] ?></td>
                                 </tr>
                             <?php } ?>
                             </tbody>

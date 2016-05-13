@@ -23,10 +23,9 @@
                                 <th>Created Date</th>
                                 <th>Student ID</th>
                                 <th>Phone</th>
-                                <th>Requested Loan</th>
                                 <?php if (isset($item) && ($item == '2' || $item == '4' || $item == '5')) { ?>
                                     <th>Approved Loan</th>
-                                    <!--<th>Remaining Loan</th>-->
+                                    <th>Remaining Loan</th>
                                 <?php } ?>
                                 <th>Tenor</th>
                                 <?php if (isset($status) && $status == 'existing') { ?><th>Approved Date</th><?php } ?>
@@ -42,13 +41,12 @@
                                             <?php echo $value['fullname'] ?>
                                         </a>
                                     </td>
-                                    <td class="center"><?php echo $value['created_time'] ?></td>
+                                    <td class="center"><span style="display: none;"><?php echo $value['created_date_timestamp']; ?></span><?php echo $value['created_time'] ?></td>
                                     <td><?php echo $value['student_id'] ?></td>
                                     <td><?php echo $value['phone'] ?></td>
-                                    <td><?php echo $value['requested_amount'] ?></td>
                                     <?php if (isset($item) && ($item == '2' || $item == '4' || $item == '5')) { ?>
                                         <td><?php echo $value['approved_amount'] ?></td>
-                                        <!--<td><?php /*echo $value['remaining_loan'] */?></td>-->
+                                        <td><?php echo $value['remaining_amount'] ?></td>
                                     <?php } ?>
                                     <td><?php echo $value['tenor'] ?></td>
                                     <?php if (isset($status) && $status == 'existing') { ?><td class="center"><?php echo $value['date_taken'] ?></td><?php } ?>

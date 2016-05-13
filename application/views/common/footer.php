@@ -5,7 +5,8 @@
 <div class="row">
     <div class="col-lg-10 col-md-offset-1">
         <hr/>
-        <h5 class="text-center" style="font-weight: bold;">Copyright &copy; 2016 United International University.</h5>
+        <h4 class="text-center" style="font-weight: bold;">Copyright &copy; <?php echo date("Y"); ?> United International University.</h4>
+        <h5 class="text-center" style="font-weight: bold;">Developed by Fuad & Ishteaque, Batch - 123, Department of CSE.</h5>
     </div>
     <!-- /.col-lg-12 -->
 </div>
@@ -40,7 +41,7 @@
         if (typeof dataTable != 'undefined'){
             $('#' + dataTable).DataTable({
                 responsive: true,
-                "lengthMenu": [ 5, 10, 25, 50, 75, 100 ],
+                "lengthMenu": [ 5, 10, 25, 50, 75, 100, 500 ],
                 "order": [[ 1, "desc" ]]
             });
         }

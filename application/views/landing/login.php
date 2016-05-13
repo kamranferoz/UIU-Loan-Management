@@ -24,11 +24,11 @@
                     <span class="input-group-addon" style="padding-right: 14px; padding-left: 14px;"><i class="fa fa-2x fa-unlock-alt"></i></span>
                     <input class="form-control input-lg" placeholder="Password" name="password" type="password" value="" required>
                 </div>
-                <div class="checkbox">
+                <!--<div class="checkbox">
                     <label style="font-size: 1.2em;">
                         <input name="remember" class="fa-2x" type="checkbox" value="Remember Me">Remember Me
                     </label>
-                </div>
+                </div>-->
                 <!-- Change this to a button or input when using this as a form -->
                 <input type="submit" class="btn btn-lg btn-warning btn-block uiu_button" value="Login" />
             </fieldset>

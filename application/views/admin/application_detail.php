@@ -3,7 +3,6 @@
     <div class="panel panel-default">
     <div class="panel-heading">
         <i class="fa fa-clock-o fa-fw"></i> Application Details
-        <a target="_blank" href="#" style="float: right; color: #FFFFFF">Download as PDF Form</a>
     </div>
     <!-- /.panel-heading -->
     <div class="panel-body" style="display: <?php echo isset($error) ? "block" : "none"; ?>">
@@ -95,11 +94,11 @@
                                 </tr>
                                 <tr class="warning">
                                     <td><strong>Approved Loan Amount:</strong></td>
-                                    <td><strong><?php echo $application_detail['details']['approved_amount']; ?></strong></td>
+                                    <td><strong><?php echo ($application_detail['details']['approved_amount'] == '') ? "Not Approved Yet" : $application_detail['details']['approved_amount']; ?></strong></td>
                                 </tr>
                                 <tr class="info">
                                     <td><strong>Remaining Loan Amount:</strong></td>
-                                    <td><strong><?php echo $application_detail['details']['remaining_loan']; ?></strong></td>
+                                    <td><strong><?php echo $application_detail['details']['remaining_amount']; ?></strong></td>
                                 </tr>
                                 <tr class="warning">
                                     <td>Loan Tenor:</td>
@@ -110,22 +109,10 @@
                                     <td><?php echo $application_detail['details']['note']; ?></td>
                                 </tr>
                                 <tr class="warning">
-                                    <td>Loan Installment System:</td>
-                                    <td><?php echo $application_detail['details']['installment_system']; ?></td>
-                                </tr>
-                                <tr class="info">
-                                    <td>Loan Installment Amount:</td>
-                                    <td><?php echo $application_detail['details']['installment_amount']; ?></td>
-                                </tr>
-                                <tr class="warning">
                                     <td>Loan Approval Date:</td>
                                     <td><?php echo isset($application_detail['details']['approved_date']) ? date("jS F, Y", $application_detail['details']['approved_date']) : "Not Approved Yet."; ?></td>
                                 </tr>
-                                <!--<tr class="info">
-                                    <td>Loan Distribution Date:</td>
-                                    <td><?php /*echo isset($application_detail['details']['distribution_date']) ? date("jS F, Y", $application_detail['details']['distribution_date']) : "Not Distributed Yet."; */?></td>
-                                </tr>-->
-                                <tr class="warning">
+                                <tr class="info">
                                     <td>Loan Status:</td>
                                     <td><?php echo $application_detail['details']['status']; ?></td>
                                 </tr>
@@ -201,7 +188,7 @@
                     </div>
                 </div>
             </li>
-            <li>
+            <li style="display: <?php echo ($application_detail['details']['status'] == 'Paid in full') ? "none" : "block"; ?>">
                 <div class="timeline-badge success"><i class="fa fa-graduation-cap"></i>
                 </div>
                 <div class="timeline-panel">
@@ -214,6 +201,8 @@
                                 <li><a href="javascript:void(0)" onclick="statusUpdate()">Update Status</a>
                                 </li>
                                 <li><a href="javascript:void(0)" onclick="addTransaction()">Add a Transaction</a>
+                                </li>
+                                <li><a href="javascript:void(0)" onclick="updateDeadline()">Increase Deadline</a>
                                 </li>
                             </ul>
                         </div>
@@ -228,11 +217,26 @@
                             <div class="form-group col-xs-6" style="padding-left: 0;">
                                 <label>Update Status</label>
                                 <select class="form-control" name="status" id="status" onchange="checkStatus();">
-                                    <option value="Loan is being reviewed by the authority">Loan Processing.</option>
-                                    <option value="Approved">Approved.</option>
-                                    <option value="Paid in full">Loan was paid in full.</option>
-                                    <option value="The application was declined by the authority">Loan is rejected.</option>
-                                    <option value="You have not paid your previous loan. Please pay your existing loan">Loan is debt.</option>
+                                    <?php
+                                        $statusArray = array(
+                                            "Loan is being reviewed by the authority" => "Loan Processing.",
+                                            "Approved" => "Approved.",
+                                            "Paid in full" => "Paid in full",
+                                            "The application was declined by the authority" => "Loan is rejected.",
+                                            "You have not paid your previous loan. Please pay your existing loan" => "Loan is debt.",
+                                        );
+                                        if ($application_detail['details']['approved_date'] != '') {
+                                            unset($statusArray["Approved"]);
+                                        }
+
+                                        foreach ($statusArray as $key => $value) {
+                                            if ($key != $application_detail['details']['status']){
+                                                ?>
+                                                <option value="<?php echo $key ?>"><?php echo $value ?></option>
+                                                <?php
+                                            }
+                                        }
+                                    ?>
                                 </select>
                             </div>
                             <div class="clearfix"></div>
@@ -243,17 +247,9 @@
                                 <div class="clearfix"></div>
                                 <div class="form-group"  style="padding-left: 0;margin-top: 10px">
                                     <label>Tenor</label>
-                                    <!--<select class="form-control" id="tenor" name="tenor">
-                                        <option value="4">Within 4 months</option>
-                                        <option value="6">Within 6 months</option>
-                                        <option value="12">Within 1 year</option>
-                                    </select>-->
                                     <input type="text" class="form-control" id="tenor" name="tenor" placeholder="Enter the deadline.">
-
                                 </div>
                             </div>
-
-
 
                             <div class="clearfix"></div>
                             <button type="submit" class="btn btn-warning">Update Status</button>
@@ -261,24 +257,27 @@
                         <form action="" method="post" id="addTransactionForm" style="display: none;">
                             <input type="hidden" name="action" value="addTransaction"/>
                             <input type="hidden" name="loan_id" value="<?php echo $application_detail['details']['loan_id'] ?>"/>
-                            <div class="form-group">
+                            <div class="form-group col-xs-6" style="padding-left: 0;">
                                 <label>Transaction Amount</label>
                                 <input type="number" class="form-control" name="amount" placeholder="Enter the transaction amount." required>
                             </div>
-                            <div class="form-group col-xs-6" style="padding-left: 0;">
-                                <label>Transaction Date</label>
-                                <input type="text" id="datepicker" class="form-control" name="date" required>
-                            </div>
                             <div class="clearfix"></div>
                             <div class="form-group col-xs-6" style="padding-left: 0;">
-                                <label>Transaction Type</label>
-                                <select class="form-control" name="type">
-                                    <option value="Credit">Credit</option>
-                                    <!--<option value="Debit">Debit</option>-->
-                                </select>
+                                <label>Transaction Date</label>
+                                <input type="text" id="transactionDate" class="form-control" name="date" required>
                             </div>
                             <div class="clearfix"></div>
                             <button type="submit" class="btn btn-warning">Add a Transaction</button>
+                        </form>
+                        <form action="" method="post" id="updateTenorForm" style="display: none;">
+                            <input type="hidden" name="action" value="updateTenor"/>
+                            <input type="hidden" name="loan_id" value="<?php echo $application_detail['details']['loan_id'] ?>"/>
+                            <div class="form-group col-xs-6" style="padding-left: 0;">
+                                <label>New Deadline</label>
+                                <input type="text" id="updateTenor" class="form-control" name="updateTenor" required>
+                            </div>
+                            <div class="clearfix"></div>
+                            <button type="submit" class="btn btn-warning">Update Deadline</button>
                         </form>
                     </div>
                 </div>
@@ -295,9 +294,11 @@
         if ($('#status').val() == 'Approved'){
             $('#approvedLoanAmountDiv').slideDown();
             $('#approved_amount').attr("required", "required");
+            $('#tenor').attr("required", "required");
         } else {
             $('#approvedLoanAmountDiv').slideUp();
             $('#approved_amount').removeAttr("required");
+            $('#tenor').removeAttr("required");
         }
     }
 
@@ -305,6 +306,7 @@
         $('#approval_date_error').slideUp();
         $('#initialMsg').slideUp();
         $('#addTransactionForm').slideUp();
+        $('#updateTenorForm').slideUp();
         $('#statusUpdate').slideDown();
     }
 
@@ -316,11 +318,28 @@
             $('#approval_date_error').slideUp();
             $('#initialMsg').slideUp();
             $('#addTransactionForm').slideDown();
+            $('#updateTenorForm').slideUp();
             $('#statusUpdate').slideUp();
         }
     }
 
+    function updateDeadline(){
+        $('#approval_date_error').slideUp();
+        $('#initialMsg').slideUp();
+        $('#addTransactionForm').slideUp();
+        $('#statusUpdate').slideUp();
+        $('#updateTenorForm').slideDown();
+    }
+
     $( "#tenor" ).datepick({
+        dateFormat: 'dd-mm-yyyy',
+        minDate: 0
+    });
+    $( "#transactionDate" ).datepick({
+        dateFormat: 'dd-mm-yyyy',
+        minDate: 0
+    });
+    $( "#updateTenor" ).datepick({
         dateFormat: 'dd-mm-yyyy',
         minDate: 0
     });

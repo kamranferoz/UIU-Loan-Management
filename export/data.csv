@@ -1,2 +1,5 @@
-"Student Name","Student ID",CGPA,Email,Phone,"Present Address","Permanent Address","Approved amount","Loan Tenor","Loan Reason","Loan Status","Loan Guarantor Name","Loan Guarantor Relation","Loan Guarantor Contact No.","Loan Guarantor Address"
-"Abdul Ali",011123000,3.5,fuad_robi@yahoo.com,0191121212121,Mohammadpur,Dhaka,12,19-05-2016,"Medical purpose",Approved,"ali's guardian",father,018121212121,dhanmondi
+"Student Name","Student ID",Phone,"Approved Amount","Remaining Amount","Loan Tenor"
+"Rowshan Ahmed Batool",011111111,01911111111,80000,70000,24-08-2016
+"Mohaiminul Alam",011000002,01xxxxxxxx2,,0,6
+"Karim Uddin",011000006,01xxxxxxxxx6,50,0,4
+"Fahimdfgh Ahmeddf",011000014,01xxxxxxxxx14,,0,6

@@ -115,16 +115,12 @@ class AdminDashboard extends Base
         $this->viewLoad('admin/application_detail', $data);
     }
 
-    public function testEmail(){
-        $this->AdminModel->testEmail();
-    }
-
     public function download(){
         $item = $this->uri->segment(3, 0);
         global $exportItem;
         $status = $exportItem[$item];
 
-        $data = $this->AdminModel->getApplications($status);
+        $data = $this->AdminModel->getApplications($status, true);
         $writeSuccess = $this->AdminModel->writeCSV($data);
 
         if ($writeSuccess == true) {
