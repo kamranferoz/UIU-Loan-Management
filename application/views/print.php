@@ -34,10 +34,10 @@
         I have already completed <?php echo $completed_credits ?> credits up to <?php echo $last_semester ?>. I will register <?php echo $taken_credits ?> credits on <?php echo $next_semester ?>. My current
         CGPA is <?php echo $cgpa ?> and GPA of last trimester is <?php echo $previous_semester_gpa ?>, due to some financial problem of my parents I need
         BDT <?php echo $requested_amount ?> as loan from student welfare fund to continue my study smoothly. I will pay back the loan if granted, within
-        <?php echo $tenor  ?> .
+        ______________________ .
     </p>
 
-    <p>So, I would be kind enough if you granted my loan.</p>
+    <p>So, I would be kind enough if you grant my loan.</p>
 
     <div style="float: right;">
         <div style="border: 1px solid #000000; padding: 2px; width: 350px;">Remarks</div>

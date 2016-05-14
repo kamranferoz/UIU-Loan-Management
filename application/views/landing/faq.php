@@ -10,13 +10,13 @@
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <i class="fa fa-hand-o-down"></i>
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">What are the requirements?</a>
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">What are the minimum requirements to apply for the loan?</a>
                         </h4>
                     </div>
                     <div id="collapseOne" class="panel-collapse collapse in">
                         <div class="panel-body">
                             <i class="fa fa-hand-o-right"></i>
-                            You have to be a member of United International University.
+                            You must maintain minimum CGPA of 3.00 or above.
                         </div>
                     </div>
                 </div>
@@ -24,13 +24,14 @@
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <i class="fa fa-hand-o-down"></i>
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Collapsible Group Item #2</a>
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">How do I check my loan status or transactions?</a>
                         </h4>
                     </div>
                     <div id="collapseTwo" class="panel-collapse collapse">
                         <div class="panel-body">
                             <i class="fa fa-hand-o-right"></i>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            You can check your current loan status by your student id in the <a target="_blank" href="<?php echo base_url() ?>index.php/user/loanStatus">Loan Status</a> menu section.
+                            You will receive an email containing your username and password if your loan is approved successfully. Afterwards, you can login <a target="_blank" href="<?php echo base_url() ?>index.php/user/login">here</a> with the credentials to check your transactions and necessary details.
                         </div>
                     </div>
                 </div>
@@ -38,13 +39,27 @@
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <i class="fa fa-hand-o-down"></i>
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">Collapsible Group Item #3</a>
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">What is the deadline to repay this loan?</a>
                         </h4>
                     </div>
                     <div id="collapseThree" class="panel-collapse collapse">
                         <div class="panel-body">
                             <i class="fa fa-hand-o-right"></i>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            You must return the full loan amount before the end of the trimester. You will also receive the deadline to repay the loan in an email when the loan is approved.
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <i class="fa fa-hand-o-down"></i>
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">I have further questions then whom can I ask?</a>
+                        </h4>
+                    </div>
+                    <div id="collapseFour" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <i class="fa fa-hand-o-right"></i>
+                            Please contact the Directorate of Student Affairs office for your further assistance.
                         </div>
                     </div>
                 </div>

@@ -11,7 +11,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="text-center text-capitalize">UIU Loan Management System</h1>
-                    <h2 class="page-header text-center text-capitalize">-- Directed By Student Affairs --</h2>
+                    <h2 class="page-header text-center text-capitalize">-- Directorate of Student Affairs --</h2>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>

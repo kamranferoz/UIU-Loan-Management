@@ -1,3 +1,8 @@
+<style type="text/css">
+    label{
+        font-weight: normal !important;
+    }
+</style>
 <div class="col-lg-8 landingRightPanel">
     <div class="panel panel-default">
         <div class="panel-heading custom_panel_heading">
@@ -143,21 +148,16 @@
                                     <label for="loan_amount">Amount <span class="required">*</span></label>
                                     <input type="number" required class="form-control" id="loan_amount" name="loan_amount" placeholder="Enter your loan ammount">
                                 </div>
-                                <!--<div class="form-group col-xs-10">
-                                    <label>Tenor</label>
-                                    <select class="form-control" id="tenor" name="tenor">
-                                        <option value="4">Within 4 months</option>
-                                        <option value="6">Within 6 months</option>
-                                        <option value="12">Within 1 year</option>
-                                        <option value="24">Within 2 years</option>
-                                        <option value="36">Within 3 years</option>
-                                        <option value="48">Within 4 years</option>
-                                    </select>
-                                </div>-->
 
                                 <div class="form-group col-xs-10" id="reasonDiv">
                                     <label for="reason">Reason <span class="required">*</span></label>
                                     <textarea id="reason" required class="form-control" rows="3" placeholder="Enter your reason.." name="reason"></textarea>
+                                </div>
+                                <div class="clearfix"></div>
+
+                                <div class="form-group col-xs-10">
+                                    <input type="checkbox" id="i_agree" name="i_agree"/>
+                                    <label for="i_agree" style="color: red;text-decoration: underline;display: inline; vertical-align: middle;">I agree that I will pay the full loan amount before my final examination.</label>
                                 </div>
                                 <div class="clearfix"></div>
 
@@ -256,6 +256,10 @@
                 $('#' + fields[loop] + 'Div').removeClass('has-error');
             }
         }
+        if (!$('#i_agree').is(":checked")){
+            alert("You must agree to the terms and condition for the loan return.");
+            errorFlag = true;
+        }
         if (!errorFlag) {
             $('#errorMsg2').slideUp();
             $(element).click();
@@ -274,7 +278,9 @@
         }
         if (!errorFlag) {
             $('#errorMsg3').slideUp();
-            $(element).submit();
+            if (confirm("You must pay the full loan amount before your final exam. Are you sure to submit the loan application now?")){
+                $(element).submit();
+            }
         }
         else $('#errorMsg3').slideDown();
     }
